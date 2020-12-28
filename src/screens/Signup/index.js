@@ -27,8 +27,8 @@ export default class Signup extends Component {
     render() {
         const { name, phonenumber, email, password, confirmPassword, loading } = this.state;
         return (
-            <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
-                <ImageBackground resizeMode="cover" style={styles.backgroundStyle} source={require('../../assets/images/login.jpg')}>
+            <ImageBackground resizeMode="cover" style={styles.backgroundStyle} source={require('../../assets/images/login.jpg')}>
+                <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
 
                     <View style={styles.innerImageContainer}>
                         <Logo />
@@ -83,8 +83,8 @@ export default class Signup extends Component {
                         <Text style={{ color: '#707070', opacity: 0.7, fontFamily: 'Nunito-Regular', }}>Already have an account?</Text>
                         <Text onPress={() => this.props.navigation.replace('Auth')} style={{ marginLeft: '5%', fontFamily: 'Nunito-SemiBold', }}>Login</Text>
                     </View>
-                </ImageBackground>
-            </ KeyboardAwareScrollView>
+                </ KeyboardAwareScrollView>
+            </ImageBackground>
         );
     }
 }
