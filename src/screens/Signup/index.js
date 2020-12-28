@@ -76,7 +76,7 @@ export default class Signup extends Component {
                             Forget Password?
                         </Text>
                     </TouchableOpacity> */}
-                    <View style={{ marginHorizontal: '25%', marginVertical: '5%' }}>
+                    <View style={{ alignItems: 'center', marginVertical: '5%' }}>
                         <Button loading={loading} title='Signup' onPress={() => this.func_HandleSignUp()} />
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: '5%', justifyContent: 'center' }}>
