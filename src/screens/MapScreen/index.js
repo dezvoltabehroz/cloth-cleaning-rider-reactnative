@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
-import MapView, { PROVIDER_GOOGLE, Marker, AnimatedRegion } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker, AnimatedRegion, } from 'react-native-maps';
 import styles from './style';
 import LinearGradient from 'react-native-linear-gradient';
-
+import customMapStyle from './mapStyle.json';
 export default class MapScreen extends Component {
     constructor(props) {
         super(props);
@@ -25,7 +25,8 @@ export default class MapScreen extends Component {
             <View style={{ flex: 1 }}>
                 <MapView
                     provider={PROVIDER_GOOGLE}
-                    style={{ height:'100%',width:'100%' }}
+                    customMapStyle={customMapStyle}
+                    style={{ flex: 1, height: '100%', width: '100%' }}
                     region={region}>
                     <Marker.Animated
                         opacity={0.5}
