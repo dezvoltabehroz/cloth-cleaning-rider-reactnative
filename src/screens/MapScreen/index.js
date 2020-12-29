@@ -8,7 +8,7 @@ export default class MapScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            region: {},
+            region: this.props.route.params.region,
             loading: true
         }
     }
@@ -20,12 +20,12 @@ export default class MapScreen extends Component {
     }
 
     render() {
-        const { region } = this.props.route.params;
+        const { region } = this.state;;
         return (
             <View style={{ flex: 1 }}>
                 <MapView
                     provider={PROVIDER_GOOGLE}
-                    style={{ flex: 1 }}
+                    style={{ height:'100%',width:'100%' }}
                     region={region}>
                     <Marker.Animated
                         opacity={0.5}
