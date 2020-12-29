@@ -134,21 +134,21 @@ export default class OrderStatus extends Component {
 
         return (
             <>
-                <View style={{ flex: 1, marginTop: '5%' }}>
-                    <KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '20%' }}>
+                <View style={{ flex: 1, paddingTop: '5%', backgroundColor: 'white' }}>
+                    <KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '10%' }}>
                         <View style={{
                             borderRadius: 10,
-                            elevation: 1,
+                            elevation: 3,
                             shadowColor: "#000",
                             shadowOffset: {
                                 width: 0,
                                 height: 1,
                             },
+                            shadowOpacity: 0.22,
+                            shadowRadius: 2.22,
                             marginHorizontal: '5%',
                             backgroundColor: 'white',
                             paddingHorizontal: '5%',
-                            shadowOpacity: 0.18,
-                            shadowRadius: 1.00,
                             marginBottom: '1%',
                             borderColor: "#EEE",
                             borderWidth: 0.3,
@@ -191,6 +191,7 @@ export default class OrderStatus extends Component {
                                             value: 'Pick Order'
                                         }]}
                                     placeholder="Pick Order"
+                                    onClose={() => this.setState({ dropdownOpen: false })}
                                     onOpen={() => this.setState({ dropdownOpen: true })}
                                     defaultValue={this.state.value ? this.state.value : null}
                                     containerStyle={{ height: 40, width: 140, marginBottom: this.state.dropdownOpen ? '25%' : 0 }}
@@ -224,75 +225,80 @@ export default class OrderStatus extends Component {
 
                     </KeyboardAwareScrollView>
                 </View>
-                <View onPress={() => { }} style={{
-                    borderRadius: 10, elevation: 1, shadowColor: "#000",
-                    shadowOffset: {
-                        width: 0,
-                        height: 1,
-                    },
-                    borderColor: "#EEE",
-                    backgroundColor: 'white',
-                    borderWidth: 0.3,
-                    shadowOpacity: 0.18,
-                    shadowRadius: 1.00,
-                    marginBottom: '5%',
-                    marginHorizontal: '5%'
-                }}>
-                    <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Map', {
-                            screen: 'Map',
-                            params: { address: this.state.address, region: this.state.region, item: this.state.item }
-                        })}>
-                            <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
-                                <Text style={styles.checkButtonTextStyle}>{'Track order'}</Text>
-                            </LinearGradient>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.checkoutInnerContainer}>
-                        <>
-                            <View style={styles.checkoutItemStyle}>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ backgroundColor: '#0DA7DF', alignItems: 'center', justifyContent: 'center', height: 20, width: 20, borderRadius: 10 }}>
-                                        <Icon.Feather name="percent" size={15} color="white" />
+                <View style={{ backgroundColor: 'white' }}>
+
+                    <View onPress={() => { }} style={{
+                        borderRadius: 10,
+                        borderColor: "#EEE",
+                        backgroundColor: 'white',
+                        borderWidth: 1,
+                        elevation: 3,
+                        shadowColor: "#000",
+                        shadowOffset: {
+                            width: 0,
+                            height: 1,
+                        },
+                        shadowOpacity: 0.22,
+                        shadowRadius: 2.22,
+                        marginBottom: '5%',
+                        marginHorizontal: '5%'
+                    }}>
+                        <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Map', {
+                                screen: 'Map',
+                                params: { address: this.state.address, region: this.state.region, item: this.state.item }
+                            })}>
+                                <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
+                                    <Text style={styles.checkButtonTextStyle}>{'Track order'}</Text>
+                                </LinearGradient>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.checkoutInnerContainer}>
+                            <>
+                                <View style={styles.checkoutItemStyle}>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <View style={{ backgroundColor: '#0DA7DF', alignItems: 'center', justifyContent: 'center', height: 20, width: 20, borderRadius: 10 }}>
+                                            <Icon.Feather name="percent" size={15} color="white" />
+                                        </View>
+                                        <Text style={{ color: '#7A7A7A', fontSize: 12, marginLeft: '5%', fontFamily: 'Roboto-Light' }}>{'Get 10 discount'}</Text>
                                     </View>
-                                    <Text style={{ color: '#7A7A7A', fontSize: 12, marginLeft: '5%', fontFamily: 'Roboto-Light' }}>{'Get 10 discount'}</Text>
+                                    <View style={{ justifyContent: 'center' }}>
+                                        <Icon.AntDesign name='checkcircle' color='#0DA7DF' size={15} />
+                                    </View>
                                 </View>
-                                <View style={{ justifyContent: 'center' }}>
-                                    <Icon.AntDesign name='checkcircle' color='#0DA7DF' size={15} />
+                                <View style={styles.checkoutItemStyle}>
+                                    <View>
+                                        <Text style={styles.checkoutTextStyle}>Total</Text>
+                                    </View>
+                                    <View>
+                                        <Text style={styles.checkoutTextStyle}>Rs.{this.state.totalPrice}</Text>
+                                    </View>
                                 </View>
-                            </View>
+                                <View style={styles.checkoutItemStyle}>
+                                    <View>
+                                        <Text style={styles.checkoutTextStyle}>Shipping</Text>
+                                    </View>
+                                    <View>
+                                        <Text style={styles.checkoutTextStyle}>Rs.{'50'}</Text>
+                                    </View>
+                                </View>
+                                <View style={styles.checkoutItemStyle}>
+                                    <View>
+                                        <Text style={styles.checkoutTextStyle}>Discount</Text>
+                                    </View>
+                                    <View>
+                                        <Text style={styles.discountTextStyle}>Rs.{'50'}</Text>
+                                    </View>
+                                </View>
+                                <View style={styles.lineStyle}></View>
+                            </>
                             <View style={styles.checkoutItemStyle}>
                                 <View>
-                                    <Text style={styles.checkoutTextStyle}>Total</Text>
+                                    <Text style={styles.totalTextStyle}>Total</Text>
                                 </View>
                                 <View>
-                                    <Text style={styles.checkoutTextStyle}>Rs.{this.state.totalPrice}</Text>
+                                    <Text style={styles.totalPriceTextStyle}>Rs. {activeTab == 0 ? this.state.totalPrice : discount ? this.state.totalPrice + delivery - discountValue : this.state.totalPrice + delivery}</Text>
                                 </View>
-                            </View>
-                            <View style={styles.checkoutItemStyle}>
-                                <View>
-                                    <Text style={styles.checkoutTextStyle}>Shipping</Text>
-                                </View>
-                                <View>
-                                    <Text style={styles.checkoutTextStyle}>Rs.{'50'}</Text>
-                                </View>
-                            </View>
-                            <View style={styles.checkoutItemStyle}>
-                                <View>
-                                    <Text style={styles.checkoutTextStyle}>Discount</Text>
-                                </View>
-                                <View>
-                                    <Text style={styles.discountTextStyle}>Rs.{'50'}</Text>
-                                </View>
-                            </View>
-                            <View style={styles.lineStyle}></View>
-                        </>
-                        <View style={styles.checkoutItemStyle}>
-                            <View>
-                                <Text style={styles.totalTextStyle}>Total</Text>
-                            </View>
-                            <View>
-                                <Text style={styles.totalPriceTextStyle}>Rs. {activeTab == 0 ? this.state.totalPrice : discount ? this.state.totalPrice + delivery - discountValue : this.state.totalPrice + delivery}</Text>
                             </View>
                         </View>
                     </View>

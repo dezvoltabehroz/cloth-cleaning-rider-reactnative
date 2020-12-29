@@ -28,9 +28,9 @@ function CustomDrawerContent({ navigation }) {
             <View style={{ flex: 1 }} >
                 <LinearGradient colors={['#27C2FA', '#27C2FA', '#0DA7DF']} style={styles.upperContainer}>
                     <TouchableOpacity onPress={() => navigation.replace('Home')} style={styles.upperContainer}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingLeft: '10%', alignItems: 'center' }}>
                             <View>
-                                <Avatar size={50} rounded={true} source={{ uri: "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" }} />
+                                <Avatar containerStyle={{ backgroundColor: 'white' }} size={50} title="J" titleStyle={{ color: '#0092C7' }} rounded={true} />
                             </View>
                             <View style={{ justifyContent: 'center', marginLeft: '5%' }}>
                                 <Text style={{ color: "white", marginLeft: "10%", fontFamily: 'Roboto-Bold', }} >John Doe</Text>
@@ -42,22 +42,22 @@ function CustomDrawerContent({ navigation }) {
                 <View style={{ flex: 0.7, paddingTop: '10%' }}>
                     <TouchableOpacity onPress={() => navigation.navigate('Orders')} style={styles.itemStyle}>
                         <Bag height={16} width={16} />
-                        <Text style={{ color: "#0092C7", marginLeft: "10%",fontFamily: 'Roboto-Regular', fontSize: 12 }}>Order History</Text>
+                        <Text style={{ color: "#0092C7", marginLeft: "10%", fontFamily: 'Roboto-Regular', fontSize: 12 }}>Order History</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.itemStyle}>
                         <User height={16} width={16} />
-                        <Text style={{ color: "#0092C7", marginLeft: "10%",fontFamily: 'Roboto-Regular', fontSize: 12 }} >Profile</Text>
+                        <Text style={{ color: "#0092C7", marginLeft: "10%", fontFamily: 'Roboto-Regular', fontSize: 12 }} >Profile</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate('About')} style={styles.itemStyle}>
                         <Question height={16} width={16} />
-                        <Text style={{ color: "#0092C7", marginLeft: "10%",fontFamily: 'Roboto-Regular', fontSize: 12 }} >About</Text>
+                        <Text style={{ color: "#0092C7", marginLeft: "10%", fontFamily: 'Roboto-Regular', fontSize: 12 }} >About</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.replace('Auth')} style={styles.itemStyle}>
                         <Logout height={16} width={16} />
-                        <Text style={{ color: "#0092C7", marginLeft: "10%",fontFamily: 'Roboto-Regular', fontSize: 12 }} >Logout</Text>
+                        <Text style={{ color: "#0092C7", marginLeft: "10%", fontFamily: 'Roboto-Regular', fontSize: 12 }} >Logout</Text>
                     </TouchableOpacity>
                     <View style={styles.policyStyles}>
-                        <Text style={{ color: "#707070",fontFamily: 'Roboto-Regular', fontSize: 12 }} >Terms & conditions / policy</Text>
+                        <Text style={{ color: "#707070", fontFamily: 'Roboto-Regular', fontSize: 12 }} >Terms & conditions / policy</Text>
                     </View>
                     {/* <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: '10%', height: 54, width: 150, justifyContent: 'space-between', }}>
                         <Icon.FontAwesome name="facebook" size={20} color="#0092C7" />

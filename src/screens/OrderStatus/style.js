@@ -34,16 +34,17 @@ export default StyleSheet.create({
         paddingHorizontal: '5%',
         backgroundColor: 'white',
         borderRadius: 10,
-        elevation: 1,
+        elevation: 3,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
             height: 1,
         },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
         borderColor: "#EEE",
-        borderWidth: 0.3,
-        shadowOpacity: 0.18,
-        shadowRadius: 1.00,
+        borderWidth: 1,
+
     },
     checkButtonTextStyle: {
         color: 'white',
@@ -83,6 +84,14 @@ export default StyleSheet.create({
         borderRadius: 35,
         height: 33,
         width: 140,
+        elevation: 3,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
         justifyContent: 'center',
     },
     content: {

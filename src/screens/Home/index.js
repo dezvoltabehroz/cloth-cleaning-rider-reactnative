@@ -128,64 +128,24 @@ export default class Home extends Component {
         this.props.navigation.navigate('Cart')
     }
 
-    _renderItems = (item, index) => {
-        return (
-            <>
-                <TouchableOpacity onPress={() => { this.setState({ index: index }) }} style={{ height: 95, width: 105, }}>
-                    <View style={{
-                        borderColor: "#EEE",
-                        borderWidth: 0.3,
-                        borderRadius: 10,
-                        elevation: 1,
-                        shadowColor: index == this.state.index ? '#EAF7FB' : "#000",
-                        shadowOffset: { width: 0, height: 1 },
-                        shadowOpacity: 0.18,
-                        shadowRadius: 1.00,
-                        height: 60,
-                        width: 105,
-                        backgroundColor: index == this.state.index ? '#EAF7FB' : 'white',
-                        justifyContent: 'center',
-                        marginTop: '10%',
-                        marginBottom: '1%',
-                    }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: '5%' }}>
-                            {item.title == 'Dry Clean' ?
-                                <Laundry />
-                                : item.title == 'Iron Only' ?
-                                    <Iron />
-                                    : item.title == 'Linen & Bedsheet' ?
-                                        <Machine />
-                                        : item.title == 'Wash & Iron' ?
-                                            <Fold />
-                                            :
-                                            <Basket />}
-                        </View>
-                    </View>
-                    <View style={{ marginTop: '5%', alignItems: 'center', justifyContent: 'center' }}>
-                        <Text style={{ fontSize: 12, color: index == this.state.index ? '#0DA7DF' : '#B5B5B5', fontFamily: 'Roboto-Medium' }}>{item.title}</Text>
-                    </View>
-                </TouchableOpacity>
-
-            </>
-        )
-    }
 
     _renderListItems = (item, index) => {
         return (
             <>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('OrderStatus', { item: item })} style={{
                     borderRadius: 10,
-                    elevation: 1,
+                    elevation: 3,
                     shadowColor: "#000",
+                    backgroundColor:'white',
                     shadowOffset: {
                         width: 0,
                         height: 1,
                     },
-                    shadowOpacity: 0.18,
-                    shadowRadius: 1.00,
+                    shadowOpacity: 0.22,
+                    shadowRadius: 2.22,
                     marginBottom: '1%',
                     borderColor: "#EEE",
-                    borderWidth: 0.3,
+                    borderWidth: 1,
                 }}>
                     <View style={{ marginHorizontal: '5%', marginTop: '5%', flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, }}>{item.name}</Text>
@@ -219,17 +179,18 @@ export default class Home extends Component {
             <>
                 <View style={{
                     borderRadius: 10,
-                    elevation: 1,
+                    elevation: 3,
+                    backgroundColor:'white',
                     shadowColor: "#000",
                     shadowOffset: {
                         width: 0,
                         height: 1,
                     },
-                    shadowOpacity: 0.18,
-                    shadowRadius: 1.00,
+                    shadowOpacity: 0.22,
+                    shadowRadius: 2.22,
                     marginBottom: '1%',
                     borderColor: "#EEE",
-                    borderWidth: 0.3,
+                    borderWidth: 1,
                 }}>
                     <View style={{ marginHorizontal: '5%', marginTop: '5%', flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, }}>{item.name}</Text>
@@ -273,13 +234,13 @@ export default class Home extends Component {
         const { activeTab } = this.state;
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }}>
-                <ImageBackground source={require('../../assets/images/header.png')} style={styles.headerImageStyle}>
+                <View style={styles.headerImageStyle}>
                     <View style={styles.upperListContainer}>
                         <View style={styles.tabContainer}>
                             <RiderTabs active={activeTab} tabs={['Recent Orders', 'Pending Orders', 'Orders History']} onTabChange={(activeTab) => { this.setState({ activeTab }); }} />
                         </View>
                     </View>
-                </ImageBackground>
+                </View>
                 <View style={{ flex: 1, top: '4%' }}>
                     {activeTab == 0 ?
                         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '5%', }}>
