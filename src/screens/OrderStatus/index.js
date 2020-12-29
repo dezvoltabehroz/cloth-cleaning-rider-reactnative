@@ -176,7 +176,7 @@ export default class OrderStatus extends Component {
                                 </View>
                             </View>
                             <View style={styles.lineStyle}></View>
-                            <View style={{ marginTop: '5%', marginBottom: '5%', flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <View style={{ marginTop: '2.5%', marginBottom: '5%', flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <Text style={{ fontFamily: 'Roboto-Regular', fontSize: 12, }}>{'Order Status'}</Text>
                                 <DropDownPicker
                                     items={[
@@ -204,14 +204,14 @@ export default class OrderStatus extends Component {
                                 />
                             </View>
                         </View>
-                        <View style={{ marginTop: '5%', }}>
+                        <View style={{ marginTop: '2.5%', }}>
                             <View style={styles.upperContainer}>
                                 <View style={{}}>
                                     <View>
                                         <Text style={{ fontFamily: 'Roboto-Medium', color: '#1E2123' }}>Order Summary</Text>
                                     </View>
                                 </View>
-                                <View style={{ marginTop: '5%' }}>
+                                <View style={{ marginTop: '2.5%' }}>
                                     <FlatList
                                         data={this.state.orderList}
                                         showsVerticalScrollIndicator={false}

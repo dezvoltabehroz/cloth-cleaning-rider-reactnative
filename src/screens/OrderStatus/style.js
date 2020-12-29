@@ -136,7 +136,7 @@ export default StyleSheet.create({
         fontFamily: 'Roboto-Regular'
     },
     itemContainer: {
-        marginTop: '2.5%',
+        // marginTop: '2.5%',
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
