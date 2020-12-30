@@ -138,14 +138,14 @@ export default class OrderStatus extends Component {
                     <KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '10%' }}>
                         <View style={{
                             borderRadius: 10,
-                            elevation: 3,
+                            elevation: 2,
                             shadowColor: "#000",
                             shadowOffset: {
                                 width: 0,
                                 height: 1,
                             },
-                            shadowOpacity: 0.22,
-                            shadowRadius: 2.22,
+                            shadowOpacity: 0.20,
+                            shadowRadius: 1.41,
                             marginHorizontal: '5%',
                             backgroundColor: 'white',
                             paddingHorizontal: '5%',
@@ -232,14 +232,14 @@ export default class OrderStatus extends Component {
                         borderColor: "#EEE",
                         backgroundColor: 'white',
                         borderWidth: 1,
-                        elevation: 3,
+                        elevation: 2,
                         shadowColor: "#000",
                         shadowOffset: {
                             width: 0,
                             height: 1,
                         },
-                        shadowOpacity: 0.22,
-                        shadowRadius: 2.22,
+                        shadowOpacity: 0.20,
+                        shadowRadius: 1.41,
                         marginBottom: '5%',
                         marginHorizontal: '5%'
                     }}>

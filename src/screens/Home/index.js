@@ -134,15 +134,15 @@ export default class Home extends Component {
             <>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('OrderStatus', { item: item })} style={{
                     borderRadius: 10,
-                    elevation: 3,
-                    shadowColor: "#000",
+                    elevation: 2,
                     backgroundColor:'white',
-                    shadowOffset: {
-                        width: 0,
-                        height: 1,
+                    shadowColor: "#000",
+                    shadowOffset:{
+                    width: 0,
+                    height: 1,
                     },
-                    shadowOpacity: 0.22,
-                    shadowRadius: 2.22,
+                    shadowOpacity: 0.20,
+                    shadowRadius: 1.41,
                     marginBottom: '1%',
                     borderColor: "#EEE",
                     borderWidth: 1,
@@ -179,15 +179,15 @@ export default class Home extends Component {
             <>
                 <View style={{
                     borderRadius: 10,
-                    elevation: 3,
+                    elevation: 2,
                     backgroundColor:'white',
                     shadowColor: "#000",
-                    shadowOffset: {
-                        width: 0,
-                        height: 1,
+                    shadowOffset:{
+                    width: 0,
+                    height: 1,
                     },
-                    shadowOpacity: 0.22,
-                    shadowRadius: 2.22,
+                    shadowOpacity: 0.20,
+                    shadowRadius: 1.41,
                     marginBottom: '1%',
                     borderColor: "#EEE",
                     borderWidth: 1,

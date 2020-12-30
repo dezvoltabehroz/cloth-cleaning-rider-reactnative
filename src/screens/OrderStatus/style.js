@@ -34,14 +34,14 @@ export default StyleSheet.create({
         paddingHorizontal: '5%',
         backgroundColor: 'white',
         borderRadius: 10,
-        elevation: 3,
+        elevation: 2,
         shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
+        shadowOffset:{
+        width: 0,
+        height: 1,
         },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
+        shadowOpacity: 0.20,
+        shadowRadius: 1.41,
         borderColor: "#EEE",
         borderWidth: 1,
 
@@ -84,14 +84,14 @@ export default StyleSheet.create({
         borderRadius: 35,
         height: 33,
         width: 140,
-        elevation: 3,
+        elevation: 2,
         shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
+        shadowOffset:{
+        width: 0,
+        height: 1,
         },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
+        shadowOpacity: 0.20,
+        shadowRadius: 1.41,
         justifyContent: 'center',
     },
     content: {

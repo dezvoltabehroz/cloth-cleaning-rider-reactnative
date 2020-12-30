@@ -87,15 +87,15 @@ export default class Home extends Component {
             <>
                 <View style={{
                     borderRadius: 10,
-                    elevation: 3,
-                    backgroundColor:'white',
+                    elevation: 2,
+                    backgroundColor: 'white',
                     shadowColor: "#000",
                     shadowOffset: {
                         width: 0,
                         height: 1,
                     },
-                    shadowOpacity: 0.22,
-                    shadowRadius: 2.22,
+                    shadowOpacity: 0.20,
+                    shadowRadius: 1.41,
                     borderColor: "#EEE",
                     borderWidth: 1,
                 }}>
