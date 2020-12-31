@@ -35,7 +35,7 @@ export default StyleSheet.create({
         width: screenWidth,
     },
     tabContainer: {
-        alignItems: 'center',
+        // alignItems: 'center',
         justifyContent: 'space-between',
     },
     upperListContainer: {

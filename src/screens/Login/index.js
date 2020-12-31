@@ -78,19 +78,19 @@ export default class Login extends Component {
                             <View style={{ alignItems: 'center', marginTop: '5%' }}>
                                 <Button loading={loading} title='Login' onPress={() => this.func_HandleLogin()} />
                             </View>
-                            <View style={{ alignItems: 'center', marginTop: '5%' }}>
+                            {/* <View style={{ alignItems: 'center', marginTop: '5%' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 5, borderWidth: 0.5, borderColor: 'red', height: 44, width: 180 }}>
                                     <Google />
                                     <Text style={{ marginLeft: '10%', fontFamily: 'Nunito-Regular', fontSize: 16 }}>Google</Text>
                                 </View>
-                            </View>
+                            </View> */}
 
                         </ KeyboardAwareScrollView>
 
-                        <View style={{ flexDirection: 'row', marginBottom: '5%', alignItems: 'center', justifyContent: 'center' }}>
+                        {/* <View style={{ flexDirection: 'row', marginBottom: '5%', alignItems: 'center', justifyContent: 'center' }}>
                             <Text style={{ color: '#707070', opacity: 0.7, fontFamily: 'Nunito-Regular' }}>Don't have an account?</Text>
                             <Text onPress={() => this.props.navigation.navigate('Signup')} style={{ marginLeft: '5%', fontFamily: 'Nunito-SemiBold', fontSize: 15 }}>Signup</Text>
-                        </View>
+                        </View> */}
                     </View>
                 </ImageBackground>
             </View>

@@ -135,11 +135,11 @@ export default class Home extends Component {
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('OrderStatus', { item: item })} style={{
                     borderRadius: 10,
                     elevation: 2,
-                    backgroundColor:'white',
+                    backgroundColor: 'white',
                     shadowColor: "#000",
-                    shadowOffset:{
-                    width: 0,
-                    height: 1,
+                    shadowOffset: {
+                        width: 0,
+                        height: 1,
                     },
                     shadowOpacity: 0.20,
                     shadowRadius: 1.41,
@@ -180,11 +180,11 @@ export default class Home extends Component {
                 <View style={{
                     borderRadius: 10,
                     elevation: 2,
-                    backgroundColor:'white',
+                    backgroundColor: 'white',
                     shadowColor: "#000",
-                    shadowOffset:{
-                    width: 0,
-                    height: 1,
+                    shadowOffset: {
+                        width: 0,
+                        height: 1,
                     },
                     shadowOpacity: 0.20,
                     shadowRadius: 1.41,
@@ -237,7 +237,7 @@ export default class Home extends Component {
                 <View style={styles.headerImageStyle}>
                     <View style={styles.upperListContainer}>
                         <View style={styles.tabContainer}>
-                            <RiderTabs active={activeTab} tabs={['Recent Orders', 'Pending Orders', 'Orders History']} onTabChange={(activeTab) => { this.setState({ activeTab }); }} />
+                            <RiderTabs active={activeTab} tabs={['Pending Orders', 'Orders History']} onTabChange={(activeTab) => { this.setState({ activeTab }); }} />
                         </View>
                     </View>
                 </View>
@@ -257,20 +257,6 @@ export default class Home extends Component {
                         null
                     }
                     {activeTab == 1 ?
-                        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '5%', }}>
-                            <View style={styles.lowerListContainer}>
-                                <FlatList
-                                    data={this.state.recentList}
-                                    showsVerticalScrollIndicator={false}
-                                    ItemSeparatorComponent={this._renderListSeparator}
-                                    renderItem={({ item, index }) => this._renderListItems(item, index)}
-                                    keyExtractor={item => item} />
-                            </View>
-                        </ScrollView>
-                        :
-                        null
-                    }
-                    {activeTab == 2 ?
                         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '15%', }}>
                             <View style={styles.lowerListContainer}>
                                 <FlatList
