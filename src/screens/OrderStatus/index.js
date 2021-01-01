@@ -6,7 +6,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Phone from '../../assets/svg/call.svg';
 import DropDownPicker from 'react-native-dropdown-picker';
-
+import Modal from 'react-native-modal';
 export default class OrderStatus extends Component {
     constructor(props) {
         super(props);
@@ -18,6 +18,7 @@ export default class OrderStatus extends Component {
             delivery: 50,
             code: '',
             discountValue: 50,
+            value: '',
             region: {
                 latitude: 32.1877,
                 longitude: 74.1945,
@@ -26,6 +27,7 @@ export default class OrderStatus extends Component {
             },
             address: 'Park Rd, Islamabad, Islamabad Capital...',
             discountModal: false,
+            pickOrder: false,
             orderList: [
                 {
                     id: 1,
@@ -130,7 +132,7 @@ export default class OrderStatus extends Component {
 
 
     render() {
-        const { activeTab, discount, delivery, item, discountValue } = this.state;
+        const { activeTab, discount, delivery, item, discountValue, pickOrder, value } = this.state;
 
         return (
             <>
@@ -187,20 +189,48 @@ export default class OrderStatus extends Component {
                                         },
                                         {
                                             id: 2,
-                                            label: 'Pick Order',
-                                            value: 'Pick Order'
+                                            label: 'Dropped',
+                                            value: 'Dropped'
+                                        },
+                                        {
+                                            id: 3,
+                                            label: 'Collect',
+                                            value: 'Collect'
+                                        },
+                                        {
+                                            id: 4,
+                                            label: 'Delivered',
+                                            value: 'Delivered'
                                         }]}
-                                    placeholder="Pick Order"
+                                    placeholder="Pick order"
                                     onClose={() => this.setState({ dropdownOpen: false })}
                                     onOpen={() => this.setState({ dropdownOpen: true })}
                                     defaultValue={this.state.value ? this.state.value : null}
-                                    containerStyle={{ height: 40, width: 140, marginBottom: this.state.dropdownOpen ? '25%' : 0 }}
+                                    containerStyle={{ height: 40, width: 140, marginBottom: this.state.dropdownOpen ? '50%' : 0 }}
                                     style={{ backgroundColor: '#fafafa' }}
                                     itemStyle={{
                                         justifyContent: 'flex-start'
                                     }}
                                     dropDownStyle={{ backgroundColor: '#fafafa', }}
-                                    onChangeItem={(item) => this.setState({ value: item.value, dropdownOpen: false }, () => console.log(item.value))}
+                                    onChangeItem={(item) => {
+                                        switch (item.value) {
+                                            case "Pick Order":
+                                                this.setState({ value: item.value, dropdownOpen: false, pickOrder: true })
+                                                break;
+                                            case "Dropped":
+                                                this.setState({ value: item.value, dropdownOpen: false, pickOrder: true })
+                                                break;
+                                            case "Collect":
+                                                this.setState({ value: item.value, dropdownOpen: false, pickOrder: true })
+                                                break;
+                                            case "Delivered":
+                                                this.setState({ value: item.value, dropdownOpen: false, pickOrder: true })
+                                                break;
+                                            default:
+                                                this.setState({ value: item.value, dropdownOpen: false })
+                                                break;
+                                        }
+                                    }}
                                 />
                             </View>
                         </View>
@@ -255,7 +285,7 @@ export default class OrderStatus extends Component {
                         </View>
                         <View style={styles.checkoutInnerContainer}>
                             <>
-                                <View style={styles.checkoutItemStyle}>
+                                {/* <View style={styles.checkoutItemStyle}>
                                     <View style={{ flexDirection: 'row' }}>
                                         <View style={{ backgroundColor: '#0DA7DF', alignItems: 'center', justifyContent: 'center', height: 20, width: 20, borderRadius: 10 }}>
                                             <Icon.Feather name="percent" size={15} color="white" />
@@ -265,7 +295,7 @@ export default class OrderStatus extends Component {
                                     <View style={{ justifyContent: 'center' }}>
                                         <Icon.AntDesign name='checkcircle' color='#0DA7DF' size={15} />
                                     </View>
-                                </View>
+                                </View> */}
                                 <View style={styles.checkoutItemStyle}>
                                     <View>
                                         <Text style={styles.checkoutTextStyle}>Total</Text>
@@ -303,6 +333,50 @@ export default class OrderStatus extends Component {
                         </View>
                     </View>
                 </View>
+                <Modal isVisible={pickOrder}>
+                    <View style={[styles.cardContainer]}>
+
+                        <View style={{}}>
+                            <Text style={{ color: '#193628', fontFamily: 'Roboto-Regular', fontSize: 16 }}>{value}</Text>
+                        </View>
+                        <View style={{ marginTop: '2.5%', borderWidth: 0.3, borderColor: '#99A0B0' }}>
+
+                        </View>
+                        <View style={{ marginTop: '2%', }}>
+                            {
+                                value == "Pick Order" ?
+                                    <Text style={{ color: '#7A7A7A', fontFamily: 'Nunito-Regular', }}>Are you sure to confirm pickup the order</Text>
+                                    : value == "Dropped" ?
+                                        <Text style={{ color: '#7A7A7A', fontFamily: 'Nunito-Regular', }}>Are you sure to confirm dropped the order</Text>
+                                        : value == "Collect" ?
+                                            <Text style={{ color: '#7A7A7A', fontFamily: 'Nunito-Regular', }}>Are you sure to confirm collect the order</Text>
+                                            : value == "Delivered" ?
+                                                <Text style={{ color: '#7A7A7A', fontFamily: 'Nunito-Regular', }}>Are you sure to confirm delivered the order</Text>
+                                                : null
+                            }
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: '10%' }}>
+                            <TouchableOpacity style={{ alignSelf: 'flex-end', }} onPress={() => this.setState({ pickOrder: false })}>
+                                <LinearGradient colors={['#FFF', '#FFF']} style={styles.clearButtonContainer}>
+                                    <Text style={styles.clearTextStyle}>{'Cancel'}</Text>
+                                </LinearGradient>
+                            </TouchableOpacity>
+                            <View style={{ width: 15 }}></View>
+                            <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => {
+                                if (value == 'Delivered') {
+                                    this.setState({ pickOrder: false }, () => this.props.navigation.navigate('OrdersDelivered'))
+                                }
+                                else {
+                                    this.setState({ pickOrder: false })
+                                }
+                            }}>
+                                <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.saveButtonContainer}>
+                                    <Text style={styles.checkButtonTextStyle}>{'Save'}</Text>
+                                </LinearGradient>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
 
             </>
         )

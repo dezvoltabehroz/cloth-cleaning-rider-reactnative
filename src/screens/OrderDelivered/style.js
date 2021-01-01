@@ -6,6 +6,7 @@ export default StyleSheet.create({
     headerImageStyle: {
         height: 40,
         width: screenWidth,
+        backgroundColor: '#29B1DB'
     },
     upperListContainer: {
         marginHorizontal: '5%',
@@ -13,28 +14,9 @@ export default StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: 'white',
         borderRadius: 10,
-        elevation: 1,
-        borderColor: "#EEE",
-        borderWidth: 0.3,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.18,
-        shadowRadius: 1.00,
-    },
-    tabContainer: {
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-    upperContainer: {
-        marginHorizontal: '5%',
-        paddingVertical: '5%',
-        paddingHorizontal: '5%',
-        backgroundColor: 'white',
-        borderRadius: 10,
         elevation: 2,
+        borderColor: "#EEE",
+        borderWidth: 1,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -42,9 +24,27 @@ export default StyleSheet.create({
         },
         shadowOpacity: 0.20,
         shadowRadius: 1.41,
+    },
+    tabContainer: {
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    upperContainer: {
+        marginHorizontal: '5%',
+        paddingHorizontal: '5%',
+        paddingVertical: '5%',
+        backgroundColor: 'white',
+        borderRadius: 10,
+        elevation: 1,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
         borderColor: "#EEE",
-        borderWidth: 1,
-
+        borderWidth: 0.3,
+        shadowOpacity: 0.18,
+        shadowRadius: 1.00,
     },
     checkButtonTextStyle: {
         color: 'white',
@@ -56,8 +56,6 @@ export default StyleSheet.create({
     },
     lineStyle: {
         borderWidth: 0.5,
-        opacity: 0.3,
-        marginVertical: '2.5%',
         borderColor: '#7A7A7A'
     },
     checkoutItemStyle: {
@@ -129,84 +127,5 @@ export default StyleSheet.create({
     headingText: {
         fontSize: 16,
         fontFamily: 'Roboto-Regular'
-    },
-    listTextStyle: {
-        fontSize: 12,
-        color: '#7A7A7A',
-        fontFamily: 'Roboto-Regular'
-    },
-    itemContainer: {
-        // marginTop: '2.5%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-    itemNameContainer: {
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-    },
-    itemNameTextStyle: {
-        color: '#000',
-        marginVertical: '5%',
-        fontSize: 12,
-        fontFamily: 'Roboto-Regular'
-    },
-    itemQuantityContainer: {
-        flexDirection: 'column',
-        // justifyContent: 'space-between'
-    },
-    listSeperatorStyle: {
-        height: 15,
-        marginTop: '5%',
-        borderTopWidth: 0.5,
-        opacity: 0.3,
-        borderTopColor: '#707070'
-    },
-    cardContainer: {
-        paddingVertical: '5%',
-        marginTop: '5%',
-        backgroundColor: 'white',
-        // marginHorizontal: '5%',
-        borderRadius: 10,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.18,
-        shadowRadius: 1.00,
-        elevation: 1,
-        borderColor: "#EEE",
-        borderWidth: 0.3,
-        bottom: '10%',
-        paddingHorizontal: '5%',
-    },
-    clearTextStyle: {
-        color: '#0DA7DF',
-        textAlign: 'center',
-        fontFamily: 'Nunito-SemiBold'
-    },
-    clearButtonContainer: {
-        borderRadius: 35,
-        height: 33,
-        width: 95,
-        borderWidth: 1,
-        borderColor: '#0DA7DF',
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingHorizontal: '5%'
-    },
-    saveButtonContainer: {
-        borderRadius: 35,
-        height: 33,
-        width: 95,
-        elevation: 2,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.20,
-        shadowRadius: 1.41,
-        justifyContent: 'center',
-    },
+    }
 })

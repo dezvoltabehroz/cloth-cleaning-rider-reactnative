@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
-import { Home, Profile, About, ResetPassword, OrderStatus, Orders } from '../../screens';
+import { Home, Profile, About, ResetPassword, OrderStatus,OrderDelivered, Orders, OrdersDetail } from '../../screens';
 import { Icon } from '../../components';
 import MapRoutes from '../Map';
 import Notification from '../../assets/svg/notification.svg';
@@ -60,7 +60,7 @@ function HomeRoutes() {
                 headerLeft: () => (<TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
                 headerTitle: () => (<View><Text style={styles.headerTitleStyle}>About</Text></View>),
             })} />
-              <Stack.Screen name="Orders" component={Orders} options={({ navigation, route }) => ({
+            <Stack.Screen name="Orders" component={Orders} options={({ navigation, route }) => ({
                 headerTitleAlign: 'center',
                 headerStyle: {
                     backgroundColor: '#29B1DB',
@@ -68,6 +68,24 @@ function HomeRoutes() {
                 },
                 headerLeft: () => (<TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
                 headerTitle: () => (<View><Text style={styles.headerTitleStyle}>Orders History</Text></View>),
+            })} />
+            <Stack.Screen name="OrdersDetail" component={OrdersDetail} options={({ navigation, route }) => ({
+                headerTitleAlign: 'center',
+                headerStyle: {
+                    backgroundColor: '#29B1DB',
+                    elevation: 0
+                },
+                headerLeft: () => (<TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
+                headerTitle: () => (<View><Text style={styles.headerTitleStyle}>Orders</Text></View>),
+            })} />
+                <Stack.Screen name="OrdersDelivered" component={OrderDelivered} options={({ navigation, route }) => ({
+                headerTitleAlign: 'center',
+                headerStyle: {
+                    backgroundColor: '#29B1DB',
+                    elevation: 0
+                },
+                headerLeft: () => (<TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
+                headerTitle: () => (<View><Text style={styles.headerTitleStyle}>Successfully Delivered</Text></View>),
             })} />
             <Stack.Screen name="Reset" component={ResetPassword} options={({ navigation, route }) => ({
                 headerTitleAlign: 'center',

@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import styles from './style';
+import { Icon } from '../../components'
 export default class About extends Component {
     constructor(props) {
         super(props);
@@ -17,17 +18,38 @@ export default class About extends Component {
         return (
             <ScrollView style={{ marginTop: 0 }}>
                 <View style={styles.aboutcontentmainStyle}>
+                    <Text style={{ color: '#102134', fontSize: 18, fontFamily: 'Roboto-Medium', marginTop: '5%', marginHorizontal: '5%' }}>
+                        {'About Us'}
+                    </Text>
                     <Text style={styles.aboutcontentStyle}>
                         {this.state.contents ? this.state.contents : null}
                     </Text>
-                    <Text style={styles.aboutTitleStyle}>{'Contact Details'}</Text>
+                    <Text style={{ color: '#102134', fontSize: 18, fontFamily: 'Roboto-Medium', marginTop: '5%', marginHorizontal: '5%' }}>
+                        {'Our Values'}
+                    </Text>
+                    <Text style={styles.aboutcontentStyle}>
+                        {this.state.contents ? this.state.contents : null}
+                    </Text>
+                    <Text style={{ color: '#102134', fontSize: 18, fontFamily: 'Roboto-Medium', marginTop: '5%', marginHorizontal: '5%' }}>
+                        {'Our Bussines Partners'}
+                    </Text>
+                    <Text style={styles.aboutcontentStyle}>
+                        {this.state.contents ? this.state.contents : null}
+                    </Text>
+                    <Text style={styles.aboutTitleStyle}>{'Contact Us'}</Text>
                     <View style={styles.contact}>
                         <View style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'row' }}>
-                            <Text style={styles.contacttype1}>{'Email'} :</Text>
+                            {/* <Text style={styles.contacttype1}>{'Email'} :</Text> */}
+                            <Icon.SimpleLineIcons name="globe" color="#5F6365" size={15} />
                             <Text style={styles.contacttype1}> {this.state.email ? this.state.email : null}</Text>
                         </View>
                         <View style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'row' }}>
-                            <Text style={styles.contacttype2}>{'Phone Number'} :</Text>
+                            {/* <Text style={styles.contacttype1}>{'Email'} :</Text> */}
+                            <Icon.MaterialCommunityIcons name="map-marker" color="#5F6365" size={15} />
+                            <Text style={styles.contacttype1}> {'Local Store'}</Text>
+                        </View>
+                        <View style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'row' }}>
+                            <Icon.Feather name="phone" color="#5F6365" size={15} />
                             <Text style={styles.contacttype1}> {this.state.phone ? this.state.phone : null}</Text>
                         </View>
                     </View>

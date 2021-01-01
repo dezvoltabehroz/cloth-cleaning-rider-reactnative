@@ -25,6 +25,12 @@ export const OrderStatus = _OrderStatus;
 import _Orders from './Orders';
 export const Orders = _Orders;
 
+import _OrdersDetail from './OrdersDetail';
+export const OrdersDetail = _OrdersDetail;
+
+import _OrdersDelivered from './OrderDelivered';
+export const OrderDelivered = _OrdersDelivered;
+
 import _MapScreen from './MapScreen';
 export const MapScreen = _MapScreen;
 

@@ -177,7 +177,7 @@ export default class Home extends Component {
     _renderOrderListItems = (item, index) => {
         return (
             <>
-                <View style={{
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('OrdersDetail')} style={{
                     borderRadius: 10,
                     elevation: 2,
                     backgroundColor: 'white',
@@ -214,7 +214,7 @@ export default class Home extends Component {
                             <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.shift}</Text>
                         </View>
                     </View>
-                </View>
+                </TouchableOpacity>
             </>
         )
     }
