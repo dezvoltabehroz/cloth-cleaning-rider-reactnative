@@ -45,7 +45,7 @@ export default class About extends Component {
                         </View>
                         <View style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'row' }}>
                             {/* <Text style={styles.contacttype1}>{'Email'} :</Text> */}
-                            <Icon.MaterialCommunityIcons name="map-marker" color="#5F6365" size={15} />
+                            <Icon.MaterialCommunityIcons name="map-marker-outline" color="#5F6365" size={20} />
                             <Text style={styles.contacttype1}> {'Local Store'}</Text>
                         </View>
                         <View style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'row' }}>
