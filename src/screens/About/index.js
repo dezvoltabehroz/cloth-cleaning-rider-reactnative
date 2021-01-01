@@ -39,12 +39,10 @@ export default class About extends Component {
                     <Text style={styles.aboutTitleStyle}>{'Contact Us'}</Text>
                     <View style={styles.contact}>
                         <View style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'row' }}>
-                            {/* <Text style={styles.contacttype1}>{'Email'} :</Text> */}
                             <Icon.SimpleLineIcons name="globe" color="#5F6365" size={15} />
                             <Text style={styles.contacttype1}> {this.state.email ? this.state.email : null}</Text>
                         </View>
                         <View style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'row' }}>
-                            {/* <Text style={styles.contacttype1}>{'Email'} :</Text> */}
                             <Icon.MaterialCommunityIcons name="map-marker-outline" color="#5F6365" size={20} />
                             <Text style={styles.contacttype1}> {'Local Store'}</Text>
                         </View>
