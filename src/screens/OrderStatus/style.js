@@ -146,7 +146,7 @@ export default StyleSheet.create({
     },
     itemNameTextStyle: {
         color: '#000',
-        marginVertical: '5%',
+        marginVertical: '2.5%',
         fontSize: 12,
         fontFamily: 'Roboto-Regular'
     },
@@ -155,8 +155,8 @@ export default StyleSheet.create({
         // justifyContent: 'space-between'
     },
     listSeperatorStyle: {
-        height: 15,
-        marginTop: '5%',
+        height: 5,
+        marginTop: '2%',
         borderTopWidth: 0.5,
         opacity: 0.3,
         borderTopColor: '#707070'

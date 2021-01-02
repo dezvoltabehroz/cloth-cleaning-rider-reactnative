@@ -94,7 +94,7 @@ export default class OrderStatus extends Component {
         if (this.props.route.params.region != undefined) {
             const { region, address } = this.props.route.params;
             console.log("region:", region)
-            this.setState({ region: region != undefined ? region : this.state.region, address: address != undefined ? address : this.state.address })
+            this.setState({ region: region, address: address })
         }
     }
     _renderListItems = (item, index) => {
@@ -274,7 +274,7 @@ export default class OrderStatus extends Component {
                         marginHorizontal: '5%'
                     }}>
                         <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Map', {
+                            <TouchableOpacity onPress={() => this.props.navigation.push('Map', {
                                 screen: 'Map',
                                 params: { address: this.state.address, region: this.state.region, item: this.state.item }
                             })}>

@@ -14,22 +14,21 @@ class Search extends Component {
         }
     }
 
-    goMap(data, details) {
+    async goMap(data, details) {
         let searchObj = {
             searchData: data,
             searchDetails: details
         }
-        this.setState({
+        await this.props.navigation.push('OrderStatus', {
             region: {
                 latitude: searchObj.searchDetails.geometry.location.lat,
                 longitude: searchObj.searchDetails.geometry.location.lng,
                 latitudeDelta: 0.005,
                 longitudeDelta: 0.005,
             },
-            name: searchObj.searchDetails.formatted_address
-        })
-        this.props.navigation.push('OrderStatus', { address: this.state.name, region: this.state.region, item: this.props.route.params.item });
-        this.setState({ region: {}, name: '' })
+            address: searchObj.searchDetails.formatted_address, item: this.props.route.params.item
+        });
+        // this.setState({ region: {}, name: '' })
         // this.props.onChange();
     }
 
