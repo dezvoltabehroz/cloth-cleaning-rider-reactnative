@@ -59,6 +59,7 @@ export default StyleSheet.create({
         borderRadius: 35,
         height: 33,
         width: 95,
+        paddingBottom: '3%',
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: '5%'
@@ -67,6 +68,7 @@ export default StyleSheet.create({
         borderRadius: 35,
         height: 33,
         width: 95,
+        paddingBottom: '3%',
         borderWidth: 1,
         borderColor: '#0DA7DF',
         justifyContent: 'center',

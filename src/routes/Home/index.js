@@ -1,11 +1,12 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
-import { Home, Profile, About, ResetPassword, OrderStatus,OrderDelivered, Orders, OrdersDetail } from '../../screens';
+import { Home, Profile, About, ResetPassword, OrderStatus, OrderDelivered, Orders, OrdersDetail } from '../../screens';
 import { Icon } from '../../components';
 import MapRoutes from '../Map';
+import { Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
 import Notification from '../../assets/svg/notification.svg';
-import Menu from '../../assets/svg/menu.svg';
+import Menus from '../../assets/svg/menu.svg';
 const screenWidth = Dimensions.get('window').width;
 const Stack = createStackNavigator();
 
@@ -20,7 +21,7 @@ function HomeRoutes() {
                     backgroundColor: '#29B1DB',
                     elevation: 0
                 },
-                headerLeft: () => (<TouchableOpacity onPress={() => navigation.toggleDrawer()} style={{ paddingLeft: 15 }}><Menu /></TouchableOpacity>),
+                headerLeft: () => (<TouchableOpacity onPress={() => navigation.toggleDrawer()} style={{ paddingLeft: 15 }}><Menus /></TouchableOpacity>),
                 headerRight: () => (<TouchableOpacity style={{ marginRight: 20 }} onPress={() => { }}><Notification /></TouchableOpacity>),
                 headerTitle: () => (<View><Text style={styles.headerTitleStyle}>DhobiUncle Rider</Text></View>),
             })} />
@@ -48,7 +49,25 @@ function HomeRoutes() {
                     elevation: 0
                 },
                 headerLeft: () => (<TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
-                headerRight: () => (<TouchableOpacity onPress={() => navigation.navigate('Reset')} style={{ marginRight: 15 }}><Icon.Ionicons name="ellipsis-vertical" size={25} color={'white'} /></TouchableOpacity>),
+                headerRight: () => (
+                    <>
+                        <Menu rendererProps={{
+                            flexDirection: 'column', marginLeft: -25,
+                            marginTop: -5,
+                        }}
+                            style={{ height: 50, marginRight: 15, alignItems: 'center', justifyContent: 'center' }}>
+                            <MenuTrigger>
+                                <Icon.Ionicons name="ellipsis-vertical" size={25} color={'white'} />
+                            </MenuTrigger>
+                            <MenuOptions optionsContainerStyle={{ width: 100 }}>
+                                <MenuOption onSelect={() => navigation.navigate('Reset')}>
+                                    <View style={{ marginVertical: 5, alignItems: 'center' }}>
+                                        <Text style={{ color: '#7a7a7a', fontFamily: 'Roboto-Regular', fontSize: 10 }}>Change Password</Text>
+                                    </View>
+                                </MenuOption>
+                            </MenuOptions>
+                        </Menu>
+                    </>),
                 headerTitle: () => (<View><Text style={styles.headerTitleStyle}>Profile</Text></View>),
             })} />
             <Stack.Screen name="About" component={About} options={({ navigation, route }) => ({
@@ -78,7 +97,7 @@ function HomeRoutes() {
                 headerLeft: () => (<TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
                 headerTitle: () => (<View><Text style={styles.headerTitleStyle}>Orders</Text></View>),
             })} />
-                <Stack.Screen name="OrdersDelivered" component={OrderDelivered} options={({ navigation, route }) => ({
+            <Stack.Screen name="OrdersDelivered" component={OrderDelivered} options={({ navigation, route }) => ({
                 headerTitleAlign: 'center',
                 headerStyle: {
                     backgroundColor: '#29B1DB',

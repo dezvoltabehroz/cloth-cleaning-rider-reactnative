@@ -30,7 +30,7 @@ export default StyleSheet.create({
         height: 15
     },
     headerImageStyle: {
-        height: 40,
+        height: 45,
         backgroundColor: '#29B1DB',
         width: screenWidth,
     },
@@ -72,6 +72,5 @@ export default StyleSheet.create({
         marginHorizontal: '5%',
         borderWidth: 0.2,
         color: '#7A7A7A',
-        opacity: 0.1,
     },
 })
