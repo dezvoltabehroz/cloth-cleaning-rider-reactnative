@@ -40,6 +40,7 @@ export default class profile extends Component {
                                 </View>
                                 <View style={{ marginTop: '5%' }}>
                                     <Input label="Email address" value={email}
+                                        disabled={true}
                                         labelStyle={{ fontSize: 10, color: email ? '#0DA7DF' : '#374B5C', fontFamily: 'Roboto-Regular' }}
                                         inputStyle={{ fontSize: 12, fontFamily: 'Roboto-Medium' }}
                                         inputContainerStyle={{ height: 30, marginHorizontal: 0 }}
