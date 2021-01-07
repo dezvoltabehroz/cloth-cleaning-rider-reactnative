@@ -70,7 +70,7 @@ export default StyleSheet.create({
     },
     lineStyle: {
         marginHorizontal: '5%',
-        borderWidth: 0.2,
+        borderWidth: 0.3,
         color: '#7A7A7A',
     },
 })
