@@ -18,7 +18,10 @@ import Pent from '../../assets/svg/pent.svg';
 import Skert from '../../assets/svg/skert.svg';
 import HandBag from '../../assets/svg/handbag.svg';
 import JNamaz from '../../assets/svg/jnamaz.svg';
-export default class Home extends Component {
+import { AuthServices } from '../../services';
+import { connect } from 'react-redux'
+import { ActivityIndicator } from 'react-native';
+class Home extends Component {
 
     constructor(props) {
         super(props);
@@ -110,13 +113,29 @@ export default class Home extends Component {
 
     // ============== func_componentDidMount - Function Will get initial data from server ==============
     componentDidMount = () => {
-        // let data = await AsyncStorage.getItem('USER_TOKEN');
-        // let token = JSON.parse(data)
-        // HomeServices.myInvitations(token)
-        //     .then((response) => {
-        //         console.log(response.data);
-        //     })
-        //     .catch((err) => { console.log(err) })
+        console.log(this.props.user)
+        let userData = {
+            id: this.props.user.user.id,
+            // token: this.props.user.access_token
+        }
+        console.log(userData)
+        AuthServices.getRiderOrders(userData)
+            .then((response) => {
+                console.log(response.data)
+                if (response.data.success) {
+                    let orderArray = []
+                    let array = [...response.data.result.rows];
+                    array.forEach(element => {
+                        if (element.orderStatus == 'delivered') {
+                            orderArray.push(element)
+                        }
+                    });
+
+
+                    this.setState({ loading: false, recentList: response.data.result.rows, orderHistory: orderArray })
+                }
+            })
+            .catch((err) => console.log(err))
     }
 
     // ============== func_searchFilter - Function Will allow user to Search jobs ==============
@@ -148,25 +167,25 @@ export default class Home extends Component {
                     borderWidth: 1,
                 }}>
                     <View style={{ marginHorizontal: '5%', marginTop: '5%', flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, }}>{item.name}</Text>
+                        <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, textTransform: "capitalize" }}>{item.name}</Text>
                         <Text style={{ fontSize: 12, color: '#7A7A7A', fontFamily: 'Roboto-Medium', }}>Order No: {item.orderNumber}</Text>
                     </View>
                     <View style={{ marginHorizontal: '5%', marginBottom: '5%', justifyContent: 'center', }}>
-                        <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, color: item.serviceType == 'Express' ? '#D20505' : '#0DA7DF' }}>{item.serviceType}</Text>
+                        <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, color: item.urgent ? '#D20505' : '#0DA7DF' }}>{item.urgent ? "Express" : "Regular"}</Text>
                     </View>
                     <View style={styles.lineStyle}></View>
                     <View style={{ margin: '2.5%', marginHorizontal: '5%', flexDirection: 'row', justifyContent: 'space-between' }}>
                         <View>
                             <Text style={{ fontFamily: 'Roboto-Regular', color: '#7A7A7A', fontSize: 12, }}>Deliver date</Text>
-                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.delivery}</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.delivery ? item.delivery : ""}</Text>
                         </View>
                         <View>
                             <Text style={{ fontFamily: 'Roboto-Regular', color: '#7A7A7A', fontSize: 12, }}>Pickup date</Text>
-                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.pickUp}</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.pickUp ? item.pickUp : ""}</Text>
                         </View>
                         <View style={{ marginBottom: '5%' }}>
                             <Text style={{ fontFamily: 'Roboto-Regular', color: '#7A7A7A', fontSize: 12, }}>Shift</Text>
-                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.shift}</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.shift ? item.shift : ""}</Text>
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -197,21 +216,21 @@ export default class Home extends Component {
                         <Text style={{ fontSize: 12, color: '#7A7A7A', fontFamily: 'Roboto-Medium', }}>Order No: {item.orderNumber}</Text>
                     </View>
                     <View style={{ marginHorizontal: '5%', marginBottom: '5%', justifyContent: 'center', }}>
-                        <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, color: item.serviceType == 'Express' ? '#D20505' : '#0DA7DF' }}>{item.orderStatus}</Text>
+                        <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, color: item.urgent ? '#D20505' : '#0DA7DF' }}>{item.urgent ? 'Express' : 'Regular'}</Text>
                     </View>
                     <View style={styles.lineStyle}></View>
                     <View style={{ margin: '2.5%', marginHorizontal: '5%', flexDirection: 'row', justifyContent: 'space-between' }}>
                         <View>
                             <Text style={{ fontFamily: 'Roboto-Regular', color: '#7A7A7A', fontSize: 12, }}>Deliver date</Text>
-                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.delivery}</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.delivery ? item.delivery : ""}</Text>
                         </View>
                         <View>
                             <Text style={{ fontFamily: 'Roboto-Regular', color: '#7A7A7A', fontSize: 12, }}>Pickup date</Text>
-                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.pickUp}</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.pickUp ? item.pickUp : ""}</Text>
                         </View>
                         <View style={{ marginBottom: '5%' }}>
                             <Text style={{ fontFamily: 'Roboto-Regular', color: '#7A7A7A', fontSize: 12, }}>Shift</Text>
-                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.shift}</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.shift ? item.shift : ""}</Text>
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -231,7 +250,7 @@ export default class Home extends Component {
     }
 
     render() {
-        const { activeTab } = this.state;
+        const { activeTab, loading } = this.state;
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }}>
                 <View style={styles.headerImageStyle}>
@@ -243,30 +262,54 @@ export default class Home extends Component {
                 </View>
                 <View style={{ flex: 1, top: '4%' }}>
                     {activeTab == 0 ?
-                        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '5%', }}>
-                            <View style={styles.lowerListContainer}>
-                                <FlatList
-                                    data={this.state.recentList}
-                                    showsVerticalScrollIndicator={false}
-                                    ItemSeparatorComponent={this._renderListSeparator}
-                                    renderItem={({ item, index }) => this._renderListItems(item, index)}
-                                    keyExtractor={item => item} />
+
+                        loading ?
+                            <View style={{ flex: 1, justifyContent: 'center' }}>
+                                <ActivityIndicator color="#0DA7DF" size="small" />
                             </View>
-                        </ScrollView>
+
+                            :
+                            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '5%', }}>
+
+                                <View style={styles.lowerListContainer}>
+                                    <FlatList
+                                        data={this.state.recentList}
+                                        showsVerticalScrollIndicator={false}
+                                        ItemSeparatorComponent={this._renderListSeparator}
+                                        renderItem={({ item, index }) => this._renderListItems(item, index)}
+                                        keyExtractor={item => item} />
+                                </View>
+                            </ScrollView>
                         :
                         null
                     }
                     {activeTab == 1 ?
-                        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '15%', }}>
-                            <View style={styles.lowerListContainer}>
-                                <FlatList
-                                    data={this.state.orderHistory}
-                                    showsVerticalScrollIndicator={false}
-                                    ItemSeparatorComponent={this._renderListSeparator}
-                                    renderItem={({ item, index }) => this._renderOrderListItems(item, index)}
-                                    keyExtractor={item => item} />
+
+                        loading ?
+                            <View style={{ flex: 1, justifyContent: 'center' }}>
+                                <ActivityIndicator color="#0DA7DF" size="small" />
                             </View>
-                        </ScrollView>
+
+                            :
+
+
+                            this.state.orderHistory.length == 0 ?
+                                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                    <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{'No completed order found'}</Text>
+                                </View>
+                                :
+                                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '15%', }}>
+                                    <View style={styles.lowerListContainer}>
+
+
+                                        <FlatList
+                                            data={this.state.orderHistory}
+                                            showsVerticalScrollIndicator={false}
+                                            ItemSeparatorComponent={this._renderListSeparator}
+                                            renderItem={({ item, index }) => this._renderOrderListItems(item, index)}
+                                            keyExtractor={item => item} />
+                                    </View>
+                                </ScrollView>
                         :
                         null
                     }
@@ -276,3 +319,11 @@ export default class Home extends Component {
     }
 
 }
+const mapStateToProps = (state) => {
+    return {
+        user: state.authReducer.userData || {}
+    };
+};
+
+
+export default connect(mapStateToProps)(Home)

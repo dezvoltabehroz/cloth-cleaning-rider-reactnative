@@ -5,13 +5,15 @@ import styles from './style';
 import Modal from 'react-native-modal';
 import { Input } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
-export default class profile extends Component {
+import { connect } from 'react-redux';
+
+class profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: "johndoe@gmail.com",
-            name: 'John Doe',
-            phone: '+123456789',
+            email: this.props.user.user.email,
+            name: this.props.user.user.fullName,
+            phone: this.props.user.user.phone,
             changePassword: false,
             updateContactInfo: false,
             password: "",
@@ -96,3 +98,10 @@ export default class profile extends Component {
         )
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        user: state.authReducer.userData || {}
+    };
+};
+
+export default connect(mapStateToProps)(profile);

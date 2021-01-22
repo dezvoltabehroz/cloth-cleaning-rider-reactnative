@@ -18,7 +18,9 @@ import Pent from '../../assets/svg/pent.svg';
 import Skert from '../../assets/svg/skert.svg';
 import HandBag from '../../assets/svg/handbag.svg';
 import JNamaz from '../../assets/svg/jnamaz.svg';
-export default class Home extends Component {
+import { AuthServices } from '../../services';
+import { connect } from 'react-redux';
+class Orders extends Component {
 
     constructor(props) {
         super(props);
@@ -27,65 +29,33 @@ export default class Home extends Component {
             activeTab: 0,
             loading: true,
             index: 0,
-            orderHistory: [
-                {
-                    name: 'John Doe',
-                    delivery: '12 Dec,2020',
-                    pickUp: '08 Dec,2020',
-                    shift: "Noon(12pm-02pm)",
-                    orderNumber: '#0000456',
-                    orderStatus: 'Delivered'
-                },
-                {
-                    name: 'John Doe',
-                    delivery: '12 Dec,2020',
-                    pickUp: '08 Dec,2020',
-                    shift: "Noon(12pm-02pm)",
-                    orderNumber: '#0000456',
-                    orderStatus: 'Delivered'
-                },
-                {
-                    name: 'John Doe',
-                    delivery: '12 Dec,2020',
-                    pickUp: '08 Dec,2020',
-                    shift: "Noon(12pm-02pm)",
-                    orderNumber: '#0000456',
-                    orderStatus: 'Delivered'
-                },
-                {
-                    name: 'John Doe',
-                    delivery: '12 Dec,2020',
-                    pickUp: '08 Dec,2020',
-                    shift: "Noon(12pm-02pm)",
-                    orderNumber: '#0000456',
-                    orderStatus: 'Delivered'
-                },
-                {
-                    name: 'John Doe',
-                    delivery: '12 Dec,2020',
-                    pickUp: '08 Dec,2020',
-                    shift: "Noon(12pm-02pm)",
-                    orderNumber: '#0000456',
-                    orderStatus: 'Delivered'
-                },
-                {
-                    name: 'John Doe',
-                    delivery: '12 Dec,2020',
-                    pickUp: '08 Dec,2020',
-                    shift: "Noon(12pm-02pm)",
-                    orderNumber: '#0000456',
-                    orderStatus: 'Delivered'
-                },
-            ]
+            orderHistory: []
 
         }
+    }
+
+    componentDidMount = () => {
+        console.log(this.props.user)
+        let userData = {
+            id: this.props.user.user.id,
+            // token: this.props.user.access_token
+        }
+        console.log(userData)
+        AuthServices.getRiderOrders(userData)
+            .then((response) => {
+                console.log(response.data)
+                if (response.data.success) {
+                    this.setState({ loading: false, orderHistory: response.data.result.rows })
+                }
+            })
+            .catch((err) => console.log(err))
     }
 
 
     _renderOrderListItems = (item, index) => {
         return (
             <>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('OrdersDetail')} style={{
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('OrdersDetail',{item:item})} style={{
                     borderRadius: 10,
                     elevation: 2,
                     backgroundColor: 'white',
@@ -100,11 +70,11 @@ export default class Home extends Component {
                     borderWidth: 1,
                 }}>
                     <View style={{ paddingHorizontal: '5%', paddingTop: '5%', flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, }}>{item.name}</Text>
+                        <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13,textTransform:'capitalize' }}>{item.name}</Text>
                         <Text style={{ fontSize: 12, color: '#7A7A7A', fontFamily: 'Roboto-Medium', }}>Order No: {item.orderNumber}</Text>
                     </View>
                     <View style={{ marginHorizontal: '5%', marginBottom: '5%', justifyContent: 'center', }}>
-                        <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, color: item.serviceType == 'Express' ? '#D20505' : '#0DA7DF' }}>{item.orderStatus}</Text>
+                        <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, color: item.urgent == '1' ? '#D20505' : '#0DA7DF' }}>{item.urgent == '1' ?'Express':'Regular'}</Text>
                     </View>
                     <View style={styles.lineStyle}></View>
                     <View style={{ margin: '2.5%', marginHorizontal: '5%', flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -150,3 +120,11 @@ export default class Home extends Component {
     }
 
 }
+const mapStateToProps = (state) => {
+    return {
+        user: state.authReducer.userData || {}
+    };
+};
+
+
+export default connect(mapStateToProps)(Orders)

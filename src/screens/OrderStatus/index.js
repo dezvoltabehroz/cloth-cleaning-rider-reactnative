@@ -7,6 +7,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import Phone from '../../assets/svg/call.svg';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Modal from 'react-native-modal';
+import { AuthServices } from '../../services';
+import { ActivityIndicator } from 'react-native';
 export default class OrderStatus extends Component {
     constructor(props) {
         super(props);
@@ -18,79 +20,36 @@ export default class OrderStatus extends Component {
             delivery: 50,
             code: '',
             discountValue: 50,
-            value: '',
+            value: {},
             region: {
-                latitude: 32.1877,
-                longitude: 74.1945,
+                latitude: 33.6518,
+                longitude: 73.1566,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
             },
             address: 'Park Rd, Islamabad, Islamabad Capital...',
             discountModal: false,
             pickOrder: false,
-            orderList: [
-                {
-                    id: 1,
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                    serviceType: "Iron only"
-                },
-                {
-                    id: 2,
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                    serviceType: "Iron only"
-                },
-                {
-                    id: 3,
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                    serviceType: "Iron only"
-                },
-                {
-                    id: 4,
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                    serviceType: "Iron only"
-                },
-                {
-                    id: 5,
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                    serviceType: "Iron only"
-                },
-                {
-                    id: 6,
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                    serviceType: "Iron only"
-                },
-                {
-                    id: 7,
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                    serviceType: "Iron only"
-
-                },
-                {
-                    id: 8,
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                    serviceType: "Iron only"
-                },
-            ]
+            orderList: [],
+            btnLoading: false
         }
     }
 
     componentDidMount = () => {
+        let userData = {
+            order_id: this.props.route.params.item.id,
+            rider_id: this.props.route.params.item.rider_id
+        }
+        AuthServices.getOrderDetails(userData)
+            .then((response) => {
+                console.log(response.data.result.orderedproduct[0])
+                this.setState({
+                    totalPrice: response.data.result.totalPrice,
+                    grandTotal: response.data.result.grandTotal,
+                    orderList: response.data.result.orderedproduct
+                })
+            })
+            .catch((err) => console.log(err))
         if (this.props.route.params.region != undefined) {
             const { region, address } = this.props.route.params;
             console.log("region:", region)
@@ -98,24 +57,25 @@ export default class OrderStatus extends Component {
         }
     }
     _renderListItems = (item, index) => {
+        console.log(item)
         return (
             <>
                 <View style={styles.listContentContainer}>
                     <View style={styles.itemContainer}>
                         <View style={styles.itemNameContainer}>
                             <View>
-                                <Text style={styles.itemNameTextStyle}>{item.title}</Text>
+                                <Text style={styles.itemNameTextStyle}>{item.productorder.name}</Text>
                             </View>
                             <View>
-                                <Text style={styles.listTextStyle}>Rs. {item.price} X {item.quantity}</Text>
+                                <Text style={styles.listTextStyle}>Rs. {item.unitPrice} X {item.quantity}</Text>
                             </View>
                         </View>
                         <View style={styles.itemNameContainer}>
                             <View>
-                                <Text style={{ color: '#000000', fontFamily: 'Roboto-Medium', fontSize: 12 }}>Rs. {item.price * item.quantity}</Text>
+                                <Text style={{ color: '#000000', fontFamily: 'Roboto-Medium', fontSize: 12, textAlign: 'right' }}>Rs. {item.unitPrice * item.quantity}</Text>
                             </View>
                             <View>
-                                <Text style={styles.listTextStyle}>{item.serviceType}</Text>
+                                <Text style={styles.listTextStyle}>{item.productorder.productcategory.name}</Text>
                             </View>
                         </View>
                     </View>
@@ -132,7 +92,7 @@ export default class OrderStatus extends Component {
 
 
     render() {
-        const { activeTab, discount, delivery, item, discountValue, pickOrder, value } = this.state;
+        const { activeTab, discount, delivery, item, discountValue, pickOrder, value, btnLoading } = this.state;
 
         return (
             <>
@@ -161,7 +121,7 @@ export default class OrderStatus extends Component {
                                 <Text style={{ fontFamily: 'Roboto-Medium' }}>{item.name}</Text>
                                 <Phone fill={'black'} height={20} width={20} />
                             </View>
-                            <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 12, color: item.serviceType == 'Express' ? '#D20505' : '#0DA7DF' }}>{item.serviceType}</Text>
+                            <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 12, color: item.urgent ? '#D20505' : '#0DA7DF' }}>{item.urgent ? 'Express' : 'Regular'}</Text>
                             <View style={styles.lineStyle}></View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <View>
@@ -185,27 +145,27 @@ export default class OrderStatus extends Component {
                                         {
                                             id: 1,
                                             label: 'Pick Order',
-                                            value: 'Pick Order'
+                                            value: 'pickedup'
                                         },
                                         {
                                             id: 2,
                                             label: 'Dropped',
-                                            value: 'Dropped'
+                                            value: 'dropped'
                                         },
                                         {
                                             id: 3,
                                             label: 'Collect',
-                                            value: 'Collect'
+                                            value: 'collect'
                                         },
                                         {
                                             id: 4,
                                             label: 'Delivered',
-                                            value: 'Delivered'
+                                            value: 'delivered'
                                         }]}
                                     placeholder="Pick order"
                                     onClose={() => this.setState({ dropdownOpen: false })}
                                     onOpen={() => this.setState({ dropdownOpen: true })}
-                                    defaultValue={this.state.value ? this.state.value : null}
+                                    defaultValue={this.state.value ? this.state.value.label : null}
                                     containerStyle={{ height: 40, width: 140, marginBottom: this.state.dropdownOpen ? '50%' : 0 }}
                                     style={{ backgroundColor: '#fafafa' }}
                                     itemStyle={{
@@ -214,16 +174,17 @@ export default class OrderStatus extends Component {
                                     dropDownStyle={{ backgroundColor: '#fafafa', }}
                                     onChangeItem={(item) => {
                                         switch (item.value) {
-                                            case "Pick Order":
+                                            case "pickedup":
+                                                this.setState({ value: item.value, dropdownOpen: false, pickOrder: true })
+                                                console.log(item)
+                                                break;
+                                            case "dropped":
                                                 this.setState({ value: item.value, dropdownOpen: false, pickOrder: true })
                                                 break;
-                                            case "Dropped":
+                                            case "collect":
                                                 this.setState({ value: item.value, dropdownOpen: false, pickOrder: true })
                                                 break;
-                                            case "Collect":
-                                                this.setState({ value: item.value, dropdownOpen: false, pickOrder: true })
-                                                break;
-                                            case "Delivered":
+                                            case "delivered":
                                                 this.setState({ value: item.value, dropdownOpen: false, pickOrder: true })
                                                 break;
                                             default:
@@ -309,17 +270,17 @@ export default class OrderStatus extends Component {
                                         <Text style={styles.checkoutTextStyle}>Shipping</Text>
                                     </View>
                                     <View>
-                                        <Text style={styles.checkoutTextStyle}>Rs.{'50'}</Text>
+                                        <Text style={styles.checkoutTextStyle}>Rs.{(this.state.grandTotal - this.state.totalPrice)}</Text>
                                     </View>
                                 </View>
-                                <View style={styles.checkoutItemStyle}>
+                                {/* <View style={styles.checkoutItemStyle}>
                                     <View>
                                         <Text style={styles.checkoutTextStyle}>Discount</Text>
                                     </View>
                                     <View>
                                         <Text style={styles.discountTextStyle}>Rs.{'50'}</Text>
                                     </View>
-                                </View>
+                                </View> */}
                                 <View style={styles.lineStyle}></View>
                             </>
                             <View style={styles.checkoutItemStyle}>
@@ -327,7 +288,7 @@ export default class OrderStatus extends Component {
                                     <Text style={styles.totalTextStyle}>Total</Text>
                                 </View>
                                 <View>
-                                    <Text style={styles.totalPriceTextStyle}>Rs. {activeTab == 0 ? this.state.totalPrice : discount ? this.state.totalPrice + delivery - discountValue : this.state.totalPrice + delivery}</Text>
+                                    <Text style={styles.totalPriceTextStyle}>Rs. {this.state.grandTotal}</Text>
                                 </View>
                             </View>
                         </View>
@@ -344,13 +305,13 @@ export default class OrderStatus extends Component {
                         </View>
                         <View style={{ marginTop: '2%', }}>
                             {
-                                value == "Pick Order" ?
+                                value == "pickedup" ?
                                     <Text style={{ color: '#7A7A7A', fontFamily: 'Nunito-Regular', }}>Are you sure to confirm pickup the order</Text>
-                                    : value == "Dropped" ?
+                                    : value == "dropped" ?
                                         <Text style={{ color: '#7A7A7A', fontFamily: 'Nunito-Regular', }}>Are you sure to confirm dropped the order</Text>
-                                        : value == "Collect" ?
+                                        : value == "collect" ?
                                             <Text style={{ color: '#7A7A7A', fontFamily: 'Nunito-Regular', }}>Are you sure to confirm collect the order</Text>
-                                            : value == "Delivered" ?
+                                            : value == "delivered" ?
                                                 <Text style={{ color: '#7A7A7A', fontFamily: 'Nunito-Regular', }}>Are you sure to confirm delivered the order</Text>
                                                 : null
                             }
@@ -363,15 +324,32 @@ export default class OrderStatus extends Component {
                             </TouchableOpacity>
                             <View style={{ width: 15 }}></View>
                             <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => {
+                                this.setState({ btnLoading: true })
                                 if (value == 'Delivered') {
                                     this.setState({ pickOrder: false }, () => this.props.navigation.navigate('OrdersDelivered'))
                                 }
                                 else {
-                                    this.setState({ pickOrder: false })
+                                    let userData = {
+                                        order_id: item.id,
+                                        rider_id: item.rider_id
+                                    }
+                                    AuthServices.riderOrderUpdate(userData)
+                                        .then((response) => {
+                                            console.log(response.data)
+                                            this.setState({ pickOrder: false })
+
+                                        })
+                                        .catch((err) => {
+                                            console.log(err)
+                                            this.setState({ pickOrder: false })
+                                        })
                                 }
                             }}>
                                 <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.saveButtonContainer}>
-                                    <Text style={styles.checkButtonTextStyle}>{'Save'}</Text>
+                                    {btnLoading ?
+                                        <ActivityIndicator color="#FFF" size="small" />
+                                        :
+                                        <Text style={styles.checkButtonTextStyle}>{'Save'}</Text>}
                                 </LinearGradient>
                             </TouchableOpacity>
                         </View>

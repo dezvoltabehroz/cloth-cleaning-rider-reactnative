@@ -5,7 +5,9 @@ import {
     View,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+import { authActions } from '../../redux/actions/auth';
 
 class AuthLoadingScreen extends React.Component {
     constructor(props) {
@@ -14,14 +16,14 @@ class AuthLoadingScreen extends React.Component {
     }
 
     _bootstrapAsync = async () => {
-
-        const userToken = await AsyncStorage.getItem('USER_TOKEN');
-        if (userToken) {
+        const userData = await AsyncStorage.getItem('USER');
+        let data = JSON.parse(userData)
+        if (userData) {
+            this.props.authActions.setUserProfile(data, this.props.navigation.replace)
             // this.props.navigation.replace('Main');
         } else {
             this.props.navigation.replace('Auth');
         }
-        // this.props.navigation.replace(userToken ? 'Customer' : 'Auth');
     };
 
     render() {
@@ -33,4 +35,16 @@ class AuthLoadingScreen extends React.Component {
     }
 }
 
-export default AuthLoadingScreen;
+const mapStateToProps = (state) => {
+    return {
+        user: state.authReducer || {}
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        authActions: bindActionCreators(authActions, dispatch)
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthLoadingScreen)

@@ -39,6 +39,13 @@ export default StyleSheet.create({
     iconImageStyle: {
         height: 20,
         width: 20
-    }
+    },
+    errorText: {
+        paddingTop: "1%",
+        paddingLeft: 8,
+        color: '#c30000',
+        fontSize: 12,
+        marginLeft: 5
+    },
 
 })

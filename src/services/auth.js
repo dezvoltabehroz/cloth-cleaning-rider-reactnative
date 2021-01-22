@@ -1,16 +1,39 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axiosInstance from './Interceptor';
 
+import axiosInstance from './Interceptor';
+let config = { headers: { 'Content-Type': 'application/json' } }
+let configToken = (token) => {
+    return {
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        }
+    }
+}
 const Api = {
     userLogin: function (userData) {
-        return axiosInstance.get(`login_freelancer?email=${userData.email}&password=${userData.password}`)
+        console.log(userData)
+        return axiosInstance.post('rider/loginrider', {
+            email: userData.email,
+            password: userData.password
+        }, config)
     },
-    getCodeForResetPass: function (email) {
-        return axiosInstance.get(`forgot_password?email=${email}`)
+    getRiderOrders: function (userData) {
+        return axiosInstance.post('rider/getriderorders', {
+            rider_id: userData.id
+        }, configToken(userData.token))
     },
-    updatePassword: function (token, password) {
-        return axiosInstance.get(`new_password?token=${token}&password=${password}`)
+    getOrderDetails: function (userData) {
+        return axiosInstance.get(`rider/riderorderdetail?id=${userData.order_id}&rider_id=${userData.rider_id}`)
     },
+    riderOrderUpdate: function (userData) {
+        return axiosInstance.put('rider/riderorderupdate', {
+            id: userData.order_id,
+            rider_id: userData.rider_id,
+            orderStatus: userData.orderStatus
+        }, config)
+    },
+
 };
 
 export default Api;
