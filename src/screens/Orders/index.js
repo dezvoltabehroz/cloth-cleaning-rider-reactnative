@@ -36,15 +36,11 @@ class Orders extends Component {
     }
 
     componentDidMount = () => {
-        console.log(this.props.user)
         let userData = {
             id: this.props.user.user.id,
-            // token: this.props.user.access_token
         }
-        console.log(userData)
         AuthServices.getRiderOrders(userData)
             .then((response) => {
-                console.log(response.data)
                 if (response.data.success) {
                     this.setState({ loading: false, orderHistory: response.data.result.rows })
                 }

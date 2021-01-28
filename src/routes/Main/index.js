@@ -26,7 +26,6 @@ function MainRoutes(props) {
 
 function CustomDrawerContent({ navigation, props }) {
     const dispatch = useDispatch();
-    console.log(props?.user)
     let title = props?.user?.user.fullName.split(' ');
     return (
         <>

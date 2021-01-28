@@ -30,7 +30,6 @@ class Login extends Component {
             }
             AuthServices.userLogin(userData)
                 .then(async (response) => {
-                    console.log(response.data)
                     await AsyncStorage.setItem('USER_TOKEN', JSON.stringify(response.data.result.access_token));
                     await this.props.authActions.setUserProfile(response.data.result, replace)
                     this.setState({ loading: false, submit: false, });

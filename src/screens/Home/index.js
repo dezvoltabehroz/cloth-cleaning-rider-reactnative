@@ -39,13 +39,11 @@ class Home extends Component {
 
     // ============== func_componentDidMount - Function Will get initial data from server ==============
     componentDidMount = () => {
-        console.log(this.props.user)
         let userData = {
             id: this.props.user.user.id,
         }
         AuthServices.getRiderOrders(userData)
             .then((response) => {
-                console.log(response.data)
                 if (response.data.success) {
                     let orderArray = [];
                     let pendingArray = [];
@@ -76,7 +74,6 @@ class Home extends Component {
 
 
     _renderListItems = (item, index) => {
-        console.log(item)
         return (
             <>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('OrderStatus', { item: item })} style={{

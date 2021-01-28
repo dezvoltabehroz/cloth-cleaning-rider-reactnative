@@ -14,8 +14,6 @@ export default class MapScreen extends Component {
 
     componentDidMount = () => {
         const { region } = this.props.route.params;
-        console.log("region:", region)
-
     }
 
     render() {

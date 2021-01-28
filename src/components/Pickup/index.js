@@ -50,7 +50,6 @@ export default class Pickup extends Component {
     componentDidMount = () => {
         if (this.props.route != undefined) {
             const { region, address } = this.props.route;
-            console.log("region:", region)
             this.setState({ region: region != undefined ? region : this.state.region, address: address != undefined ? address : this.state.address })
         }
 

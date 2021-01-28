@@ -42,7 +42,6 @@ export default class OrderStatus extends Component {
         }
         AuthServices.getOrderDetails(userData)
             .then((response) => {
-                console.log(response.data.result.orderedproduct[0])
                 this.setState({
                     totalPrice: response.data.result.totalPrice,
                     grandTotal: response.data.result.grandTotal,
@@ -52,12 +51,10 @@ export default class OrderStatus extends Component {
             .catch((err) => console.log(err))
         if (this.props.route.params.region != undefined) {
             const { region, address } = this.props.route.params;
-            console.log("region:", region)
             this.setState({ region: region, address: address })
         }
     }
     _renderListItems = (item, index) => {
-        console.log(item)
         return (
             <>
                 <View style={styles.listContentContainer}>
@@ -176,7 +173,6 @@ export default class OrderStatus extends Component {
                                         switch (item.value) {
                                             case "pickedup":
                                                 this.setState({ value: item.value, dropdownOpen: false, pickOrder: true })
-                                                console.log(item)
                                                 break;
                                             case "dropped":
                                                 this.setState({ value: item.value, dropdownOpen: false, pickOrder: true })
@@ -335,7 +331,6 @@ export default class OrderStatus extends Component {
                                     }
                                     AuthServices.riderOrderUpdate(userData)
                                         .then((response) => {
-                                            console.log(response.data)
                                             this.setState({ pickOrder: false })
 
                                         })

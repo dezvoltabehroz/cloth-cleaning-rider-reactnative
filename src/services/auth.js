@@ -12,7 +12,6 @@ let configToken = (token) => {
 }
 const Api = {
     userLogin: function (userData) {
-        console.log(userData)
         return axiosInstance.post('rider/loginrider', {
             email: userData.email,
             password: userData.password
