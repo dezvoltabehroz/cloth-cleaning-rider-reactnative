@@ -106,7 +106,7 @@ class Home extends Component {
                         </View>
                         <View>
                             <Text style={{ fontFamily: 'Roboto-Regular', color: '#7A7A7A', fontSize: 12, }}>Pickup date</Text>
-                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.day=='today' ? moment(`${item.createdAt}`).format('ll') : moment(item.createdAt).add(1, 'days').format('ll')}</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.day == 'today' ? moment(`${item.createdAt}`).format('ll') : moment(item.createdAt).add(1, 'days').format('ll')}</Text>
                         </View>
                         <View style={{ marginBottom: '5%' }}>
                             <Text style={{ fontFamily: 'Roboto-Regular', color: '#7A7A7A', fontSize: 12, }}>Shift</Text>
@@ -121,7 +121,7 @@ class Home extends Component {
     _renderOrderListItems = (item, index) => {
         return (
             <>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('OrdersDetail')} style={{
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('OrdersDetail', { item: item })} style={{
                     borderRadius: 10,
                     elevation: 2,
                     backgroundColor: 'white',
@@ -137,25 +137,25 @@ class Home extends Component {
                     borderWidth: 1,
                 }}>
                     <View style={{ marginHorizontal: '5%', marginTop: '5%', flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, }}>{item.name}</Text>
-                        <Text style={{ fontSize: 12, color: '#7A7A7A', fontFamily: 'Roboto-Medium', }}>Order No: {item.orderNumber}</Text>
+                        <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, textTransform: "capitalize" }}>{item.name}</Text>
+                        <Text style={{ fontSize: 12, color: '#7A7A7A', fontFamily: 'Roboto-Medium', }}>Order No: #{item.id}</Text>
                     </View>
                     <View style={{ marginHorizontal: '5%', marginBottom: '5%', justifyContent: 'center', }}>
-                        <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, color: item.urgent ? '#D20505' : '#0DA7DF' }}>{item.urgent ? 'Express' : 'Regular'}</Text>
+                        <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, color: item.urgent ? '#D20505' : '#0DA7DF' }}>{item.urgent ? "Express" : "Regular"}</Text>
                     </View>
                     <View style={styles.lineStyle}></View>
                     <View style={{ margin: '2.5%', marginHorizontal: '5%', flexDirection: 'row', justifyContent: 'space-between' }}>
                         <View>
                             <Text style={{ fontFamily: 'Roboto-Regular', color: '#7A7A7A', fontSize: 12, }}>Deliver date</Text>
-                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.delivery ? item.delivery : ""}</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.deliveryTime != null ? moment(`${item.deliveryTime}`).format('ll') : ""}</Text>
                         </View>
                         <View>
                             <Text style={{ fontFamily: 'Roboto-Regular', color: '#7A7A7A', fontSize: 12, }}>Pickup date</Text>
-                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.pickUp ? item.pickUp : ""}</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.day == 'today' ? moment(`${item.createdAt}`).format('ll') : moment(item.createdAt).add(1, 'days').format('ll')}</Text>
                         </View>
                         <View style={{ marginBottom: '5%' }}>
                             <Text style={{ fontFamily: 'Roboto-Regular', color: '#7A7A7A', fontSize: 12, }}>Shift</Text>
-                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.shift ? item.shift : ""}</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', textTransform: 'capitalize' }}>{item.time}</Text>
                         </View>
                     </View>
                 </TouchableOpacity>
