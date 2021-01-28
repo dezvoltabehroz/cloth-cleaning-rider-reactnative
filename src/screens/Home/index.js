@@ -21,6 +21,7 @@ import JNamaz from '../../assets/svg/jnamaz.svg';
 import { AuthServices } from '../../services';
 import { connect } from 'react-redux'
 import { ActivityIndicator } from 'react-native';
+import moment from 'moment';
 class Home extends Component {
 
     constructor(props) {
@@ -30,83 +31,8 @@ class Home extends Component {
             activeTab: 0,
             loading: true,
             index: 0,
-
-            recentList: [
-                {
-                    name: 'John Doe',
-                    delivery: '12 Dec,2020',
-                    pickUp: '08 Dec,2020',
-                    shift: "Noon(12pm-02pm)",
-                    orderNumber: '#0000456',
-                    serviceType: 'Regular'
-                },
-                {
-                    name: 'John Doe',
-                    delivery: '12 Dec,2020',
-                    pickUp: '08 Dec,2020',
-                    shift: "Noon(12pm-02pm)",
-                    orderNumber: '#0000456',
-                    serviceType: 'Express'
-                },
-                {
-                    name: 'John Doe',
-                    delivery: '12 Dec,2020',
-                    pickUp: '08 Dec,2020',
-                    shift: "Noon(12pm-02pm)",
-                    orderNumber: '#0000456',
-                    serviceType: 'Regular'
-                },
-            ],
-            orderHistory: [
-                {
-                    name: 'John Doe',
-                    delivery: '12 Dec,2020',
-                    pickUp: '08 Dec,2020',
-                    shift: "Noon(12pm-02pm)",
-                    orderNumber: '#0000456',
-                    orderStatus: 'Delivered'
-                },
-                {
-                    name: 'John Doe',
-                    delivery: '12 Dec,2020',
-                    pickUp: '08 Dec,2020',
-                    shift: "Noon(12pm-02pm)",
-                    orderNumber: '#0000456',
-                    orderStatus: 'Delivered'
-                },
-                {
-                    name: 'John Doe',
-                    delivery: '12 Dec,2020',
-                    pickUp: '08 Dec,2020',
-                    shift: "Noon(12pm-02pm)",
-                    orderNumber: '#0000456',
-                    orderStatus: 'Delivered'
-                },
-                {
-                    name: 'John Doe',
-                    delivery: '12 Dec,2020',
-                    pickUp: '08 Dec,2020',
-                    shift: "Noon(12pm-02pm)",
-                    orderNumber: '#0000456',
-                    orderStatus: 'Delivered'
-                },
-                {
-                    name: 'John Doe',
-                    delivery: '12 Dec,2020',
-                    pickUp: '08 Dec,2020',
-                    shift: "Noon(12pm-02pm)",
-                    orderNumber: '#0000456',
-                    orderStatus: 'Delivered'
-                },
-                {
-                    name: 'John Doe',
-                    delivery: '12 Dec,2020',
-                    pickUp: '08 Dec,2020',
-                    shift: "Noon(12pm-02pm)",
-                    orderNumber: '#0000456',
-                    orderStatus: 'Delivered'
-                },
-            ]
+            recentList: [],
+            orderHistory: []
 
         }
     }
@@ -116,23 +42,24 @@ class Home extends Component {
         console.log(this.props.user)
         let userData = {
             id: this.props.user.user.id,
-            // token: this.props.user.access_token
         }
-        console.log(userData)
         AuthServices.getRiderOrders(userData)
             .then((response) => {
                 console.log(response.data)
                 if (response.data.success) {
-                    let orderArray = []
+                    let orderArray = [];
+                    let pendingArray = [];
                     let array = [...response.data.result.rows];
                     array.forEach(element => {
                         if (element.orderStatus == 'delivered') {
                             orderArray.push(element)
+                        } else {
+                            pendingArray.push(element)
                         }
                     });
 
 
-                    this.setState({ loading: false, recentList: response.data.result.rows, orderHistory: orderArray })
+                    this.setState({ loading: false, recentList: pendingArray, orderHistory: orderArray })
                 }
             })
             .catch((err) => console.log(err))
@@ -149,6 +76,7 @@ class Home extends Component {
 
 
     _renderListItems = (item, index) => {
+        console.log(item)
         return (
             <>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('OrderStatus', { item: item })} style={{
@@ -168,7 +96,7 @@ class Home extends Component {
                 }}>
                     <View style={{ marginHorizontal: '5%', marginTop: '5%', flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, textTransform: "capitalize" }}>{item.name}</Text>
-                        <Text style={{ fontSize: 12, color: '#7A7A7A', fontFamily: 'Roboto-Medium', }}>Order No: {item.orderNumber}</Text>
+                        <Text style={{ fontSize: 12, color: '#7A7A7A', fontFamily: 'Roboto-Medium', }}>Order No: #{item.id}</Text>
                     </View>
                     <View style={{ marginHorizontal: '5%', marginBottom: '5%', justifyContent: 'center', }}>
                         <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, color: item.urgent ? '#D20505' : '#0DA7DF' }}>{item.urgent ? "Express" : "Regular"}</Text>
@@ -177,15 +105,15 @@ class Home extends Component {
                     <View style={{ margin: '2.5%', marginHorizontal: '5%', flexDirection: 'row', justifyContent: 'space-between' }}>
                         <View>
                             <Text style={{ fontFamily: 'Roboto-Regular', color: '#7A7A7A', fontSize: 12, }}>Deliver date</Text>
-                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.delivery ? item.delivery : ""}</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.deliveryTime != null ? moment(`${item.deliveryTime}`).format('ll') : ""}</Text>
                         </View>
                         <View>
                             <Text style={{ fontFamily: 'Roboto-Regular', color: '#7A7A7A', fontSize: 12, }}>Pickup date</Text>
-                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.pickUp ? item.pickUp : ""}</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.day=='today' ? moment(`${item.createdAt}`).format('ll') : moment(item.createdAt).add(1, 'days').format('ll')}</Text>
                         </View>
                         <View style={{ marginBottom: '5%' }}>
                             <Text style={{ fontFamily: 'Roboto-Regular', color: '#7A7A7A', fontSize: 12, }}>Shift</Text>
-                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{item.shift ? item.shift : ""}</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', textTransform: 'capitalize' }}>{item.time}</Text>
                         </View>
                     </View>
                 </TouchableOpacity>

@@ -3,6 +3,7 @@ import { View, Text, Dimensions, ScrollView, } from 'react-native';
 import styles from './style';
 import ProgressCircle from 'react-native-progress-circle'
 import { AuthServices } from '../../services';
+import moment from 'moment'
 const screenWidth = Dimensions.get('window').width;
 
 export default class ProductDetail extends Component {
@@ -35,16 +36,16 @@ export default class ProductDetail extends Component {
         AuthServices.getOrderDetails(userData)
             .then((response) => {
                 if (response.data.success) {
+                    console.log(response.data.result.deliveryTime)
                     this.setState({
                         address: response.data.result.deliveryAddress,
                         status: response.data.result.orderStatus,
                         totalPrice: response.data.result.totalPrice,
                         grandTotal: response.data.result.grandTotal,
                         orders: response.data.result.orderedproduct,
-                        orderNumber: response.data.result.orderNumber ? response.data.result.orderNumber : "",
-                        date: response.data.result.deliveryDate ? response.data.result.deliveryDate : ""
+                        orderNumber: response.data.result.id,
+                        date: response.data.result.deliveryTime
                     })
-                    console.log("response.data.result.orderedproduct:", response.data.result.orderedproduct)
                 }
             })
             .catch((err) => console.log(err))
@@ -87,7 +88,7 @@ export default class ProductDetail extends Component {
                                 <Text style={styles.listTextStyle}>Your order number:</Text>
                             </View>
                             <View>
-                                <Text style={[styles.listTextStyle, { fontFamily: 'Roboto-Medium' }]}>{orderNumber}</Text>
+                                <Text style={[styles.listTextStyle, { fontFamily: 'Roboto-Medium' }]}>#{orderNumber}</Text>
                             </View>
                         </View>
                         <View style={styles.itemQuantityContainer}>
@@ -103,7 +104,7 @@ export default class ProductDetail extends Component {
                                 <Text style={styles.listTextStyle}>Delivery date:</Text>
                             </View>
                             <View>
-                                <Text style={[styles.listTextStyle, { fontFamily: 'Roboto-Medium' }]}>{date}</Text>
+                                <Text style={[styles.listTextStyle, { fontFamily: 'Roboto-Medium' }]}>{date != null ? moment(date).format('ll') : ''}</Text>
                             </View>
                         </View>
                         <View style={styles.lineStyle}></View>
@@ -127,7 +128,6 @@ export default class ProductDetail extends Component {
                                                 <Text style={[styles.listTextStyle, { fontFamily: 'Roboto-Medium' }]}>{item.productorder.productcategory.name}</Text>
                                             </View>
                                         </View>
-                                        <View style={styles.lineStyle}></View>
                                     </>
                                 )
                             })
