@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Dimensions, Image } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Dimensions, Image, Linking } from 'react-native';
 import { Icon, } from '../../components';
 import styles from './style';
 import LinearGradient from 'react-native-linear-gradient'
@@ -35,7 +35,8 @@ export default class OrderStatus extends Component {
             pickOrder: false,
             orderList: [],
             btnLoading: false,
-            loading: false
+            loading: false,
+            phone: ''
         }
     }
 
@@ -47,7 +48,6 @@ export default class OrderStatus extends Component {
         }
         AuthServices.getOrderDetails(userData)
             .then((response) => {
-                console.log(response.data)
                 this.setState({
                     totalPrice: response.data.result.totalPrice,
                     grandTotal: response.data.result.grandTotal,
@@ -58,6 +58,7 @@ export default class OrderStatus extends Component {
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421,
                     },
+                    phone: response.data.result.phone,
                     address: response.data.result.deliveryAddress,
                     loading: false
                 })
@@ -131,10 +132,20 @@ export default class OrderStatus extends Component {
                         }}>
 
 
-                            <View style={{ marginTop: '5%', flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <TouchableOpacity onPress={() => {
+                                const { phone } = this.state;
+                                let number = ''
+                                if (Platform.OS === 'android') {
+                                    number = 'tel:' + phone
+                                }
+                                else {
+                                    number = 'telprompt:' + phone
+                                }
+                                Linking.openURL(number);
+                            }} style={{ marginTop: '5%', flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <Text style={{ fontFamily: 'Roboto-Medium' }}>{item.name}</Text>
                                 <Phone fill={'black'} height={20} width={20} />
-                            </View>
+                            </TouchableOpacity>
                             <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 12, color: item.urgent ? '#D20505' : '#0DA7DF' }}>{item.urgent ? 'Express' : 'Regular'}</Text>
                             <View style={styles.lineStyle}></View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -249,22 +260,22 @@ export default class OrderStatus extends Component {
                     }}>
                         <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>
                             <TouchableOpacity onPress={() => {
-                                if (this.state.region.longitude == 'undefined' || this.state.region.longitude == null || this.state.region.longitude == '' || this.state.region.longitude == NaN) {
-                                    alert('Under Devolepment Coming Soon')
-                                }
-                                else {
-                                    this.props.navigation.push('Map', {
-                                        screen: 'Map',
-                                        params: {
-                                            address: this.state.address, region: {
-                                                latitude: parseFloat(this.state.region.latitude),
-                                                longitude: parseFloat(this.state.region.longitude),
-                                                latitudeDelta: 0.0922,
-                                                longitudeDelta: 0.0421,
-                                            }
-                                        }
-                                    })
-                                }
+                                // if (this.state.region.longitude == 'undefined' || this.state.region.longitude == null || this.state.region.longitude == '' || this.state.region.longitude == NaN) {
+                                //     alert('Under Devolepment Coming Soon')
+                                // }
+                                // else {
+                                //     this.props.navigation.push('Map', {
+                                //         screen: 'Map',
+                                //         params: {
+                                //             address: this.state.address, region: {
+                                //                 latitude: parseFloat(this.state.region.latitude),
+                                //                 longitude: parseFloat(this.state.region.longitude),
+                                //                 latitudeDelta: 0.0922,
+                                //                 longitudeDelta: 0.0421,
+                                //             }
+                                //         }
+                                //     })
+                                // }
                             }}>
                                 <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
                                     <Text style={styles.checkButtonTextStyle}>{'Track order'}</Text>
