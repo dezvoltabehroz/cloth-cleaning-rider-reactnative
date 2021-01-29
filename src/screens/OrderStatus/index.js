@@ -10,6 +10,8 @@ import Modal from 'react-native-modal';
 import { AuthServices } from '../../services';
 import moment from 'moment';
 import { ActivityIndicator } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { RefreshControl } from 'react-native';
 export default class OrderStatus extends Component {
     constructor(props) {
         super(props);
@@ -28,32 +30,39 @@ export default class OrderStatus extends Component {
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
             },
-            address: 'Park Rd, Islamabad, Islamabad Capital...',
+            address: '',
             discountModal: false,
             pickOrder: false,
             orderList: [],
-            btnLoading: false
+            btnLoading: false,
+            loading: false
         }
     }
 
     componentDidMount = () => {
+        this.setState({ loading: true })
         let userData = {
             order_id: this.props.route.params.item.id,
             rider_id: this.props.route.params.item.rider_id
         }
         AuthServices.getOrderDetails(userData)
             .then((response) => {
+                console.log(response.data)
                 this.setState({
                     totalPrice: response.data.result.totalPrice,
                     grandTotal: response.data.result.grandTotal,
                     orderList: response.data.result.orderedproduct,
+                    region: {
+                        latitude: response.data.result.lat,
+                        longitude: response.data.result.long,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                    },
+                    address: response.data.result.deliveryAddress,
+                    loading: false
                 })
             })
             .catch((err) => console.log(err))
-        if (this.props.route.params.region != undefined) {
-            const { region, address } = this.props.route.params;
-            this.setState({ region: region, address: address })
-        }
     }
     _renderListItems = (item, index) => {
         return (
@@ -95,7 +104,14 @@ export default class OrderStatus extends Component {
         return (
             <>
                 <View style={{ flex: 1, paddingTop: '5%', backgroundColor: 'white' }}>
-                    <KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '10%' }}>
+                    <ScrollView refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.loading}
+                            onRefresh={() => this.componentDidMount()}
+                            tintColor={'#0DA7DF'}
+                            colors={['#0DA7DF']}
+                        />
+                    } showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '10%' }}>
                         <View style={{
                             borderRadius: 10,
                             elevation: 2,
@@ -211,7 +227,7 @@ export default class OrderStatus extends Component {
                             </View>
                         </View>
 
-                    </KeyboardAwareScrollView>
+                    </ScrollView>
                 </View>
                 <View style={{ backgroundColor: 'white' }}>
 
@@ -232,10 +248,24 @@ export default class OrderStatus extends Component {
                         marginHorizontal: '5%'
                     }}>
                         <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>
-                            <TouchableOpacity onPress={() => this.props.navigation.push('Map', {
-                                screen: 'Map',
-                                params: { address: this.state.address, region: this.state.region, item: this.state.item }
-                            })}>
+                            <TouchableOpacity onPress={() => {
+                                if (this.state.region.longitude == 'undefined' || this.state.region.longitude == null || this.state.region.longitude == '' || this.state.region.longitude == NaN) {
+                                    alert('Under Devolepment Coming Soon')
+                                }
+                                else {
+                                    this.props.navigation.push('Map', {
+                                        screen: 'Map',
+                                        params: {
+                                            address: this.state.address, region: {
+                                                latitude: parseFloat(this.state.region.latitude),
+                                                longitude: parseFloat(this.state.region.longitude),
+                                                latitudeDelta: 0.0922,
+                                                longitudeDelta: 0.0421,
+                                            }
+                                        }
+                                    })
+                                }
+                            }}>
                                 <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
                                     <Text style={styles.checkButtonTextStyle}>{'Track order'}</Text>
                                 </LinearGradient>

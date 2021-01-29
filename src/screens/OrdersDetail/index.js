@@ -6,6 +6,7 @@ import { AuthServices } from '../../services';
 import moment from 'moment'
 import { FA5Style } from 'react-native-vector-icons/FontAwesome5';
 import { ActivityIndicator } from 'react-native';
+import { RefreshControl } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 
 export default class ProductDetail extends Component {
@@ -30,6 +31,7 @@ export default class ProductDetail extends Component {
         }
     }
     componentDidMount = () => {
+        this.setState({ loading: true })
         let userData = {
             order_id: this.props.route.params.item.id,
             rider_id: this.props.route.params.item.rider_id
@@ -66,7 +68,14 @@ export default class ProductDetail extends Component {
                         </View>
                         :
                         <View style={{ flex: 1, backgroundColor: 'white' }}>
-                            <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
+                            <ScrollView refreshControl={
+                                <RefreshControl
+                                    refreshing={this.state.loading}
+                                    onRefresh={() => this.componentDidMount()}
+                                    tintColor={'#0DA7DF'}
+                                    colors={['#0DA7DF']}
+                                />
+                            } contentContainerStyle={{ paddingBottom: 80 }}>
                                 <View style={styles.upperContainer}>
                                 </View>
                                 <View style={styles.imageContainer}>

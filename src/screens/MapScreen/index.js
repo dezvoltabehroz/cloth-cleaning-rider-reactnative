@@ -7,17 +7,23 @@ export default class MapScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            region: this.props.route.params.region,
+            region: {
+                latitude: 33.6518,
+                longitude: 73.1566,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+            },
             loading: true
         }
     }
 
     componentDidMount = () => {
         const { region } = this.props.route.params;
+        this.setState({ region: region })
     }
 
     render() {
-        const { region } = this.state;;
+        const { region } = this.state;
         return (
             <View style={{ flex: 1 }}>
                 <MapView
@@ -27,12 +33,12 @@ export default class MapScreen extends Component {
                     <Marker.Animated
                         opacity={0.5}
                         style={{ width: 20, height: 20 }}
-                        coordinate={new AnimatedRegion({
-                            latitude: parseFloat(region.latitude),
-                            longitude: parseFloat(region.longitude),
+                        coordinate={{
+                            latitude: region.latitude,
+                            longitude: region.longitude,
                             latitudeDelta: region.latitudeDelta,
                             longitudeDelta: region.longitudeDelta,
-                        })}
+                        }}
                     ></Marker.Animated>
                 </MapView>
                 <TouchableOpacity style={{ position: 'absolute', top: '90%', alignSelf: 'center' }} onPress={() => this.props.navigation.navigate('Search', { item: this.props.route.params.item })}>
