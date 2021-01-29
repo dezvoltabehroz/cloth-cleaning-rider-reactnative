@@ -36,7 +36,7 @@ function HomeRoutes() {
                 headerTitle: () => (
                     <View>
                         <Text style={styles.headerTitleStyle}>Order Status</Text>
-                        <Text style={{ fontSize: 12, fontFamily: 'Roboto-Regular', color: 'white' }}>Order No: {route.params.item.orderNumber} </Text>
+                        <Text style={{ fontSize: 12, fontFamily: 'Roboto-Regular', color: 'white', textAlign: 'center' }}>Order No: #{route.params.item.id} </Text>
                     </View>),
             })} />
             <Stack.Screen name="Map" component={MapRoutes} options={{

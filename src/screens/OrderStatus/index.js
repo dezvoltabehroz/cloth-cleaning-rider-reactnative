@@ -8,6 +8,7 @@ import Phone from '../../assets/svg/call.svg';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Modal from 'react-native-modal';
 import { AuthServices } from '../../services';
+import moment from 'moment';
 import { ActivityIndicator } from 'react-native';
 export default class OrderStatus extends Component {
     constructor(props) {
@@ -45,7 +46,7 @@ export default class OrderStatus extends Component {
                 this.setState({
                     totalPrice: response.data.result.totalPrice,
                     grandTotal: response.data.result.grandTotal,
-                    orderList: response.data.result.orderedproduct
+                    orderList: response.data.result.orderedproduct,
                 })
             })
             .catch((err) => console.log(err))
@@ -123,15 +124,15 @@ export default class OrderStatus extends Component {
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <View>
                                     <Text style={{ fontFamily: 'Roboto-Regular', color: '#7A7A7A', fontSize: 12, marginVertical: '5%' }}>Deliver date</Text>
-                                    <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', marginBottom: '5%' }}>{item.delivery}</Text>
+                                    <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', marginBottom: '5%' }}>{item.deliveryTime != null ? moment(item.deliveryTime).format('ll') : ''}</Text>
                                 </View>
                                 <View>
                                     <Text style={{ fontFamily: 'Roboto-Regular', color: '#7A7A7A', fontSize: 12, marginVertical: '5%' }}>Pickup date</Text>
-                                    <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', marginBottom: '5%' }}>{item.pickUp}</Text>
+                                    <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', marginBottom: '5%' }}>{moment(item.createdAt).format('ll')}</Text>
                                 </View>
                                 <View style={{}}>
                                     <Text style={{ fontFamily: 'Roboto-Regular', color: '#7A7A7A', fontSize: 12, marginTop: '5%' }}>Shift</Text>
-                                    <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', marginBottom: '5%' }}>{item.shift}</Text>
+                                    <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', marginBottom: '5%', textTransform: 'capitalize' }}>{item.time}</Text>
                                 </View>
                             </View>
                             <View style={styles.lineStyle}></View>

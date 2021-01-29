@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { Component } from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View, ImageBackground, FlatList, Platform } from 'react-native';
+import { Image, ScrollView, Text, TouchableOpacity, RefreshControl, View, ImageBackground, FlatList, Platform } from 'react-native';
 import { Input } from 'react-native-elements';
 import { RiderTabs } from '../../components';
 import styles from './style';
@@ -32,13 +32,13 @@ class Home extends Component {
             loading: true,
             index: 0,
             recentList: [],
-            orderHistory: []
-
+            orderHistory: [],
         }
     }
 
     // ============== func_componentDidMount - Function Will get initial data from server ==============
     componentDidMount = () => {
+        this.setState({ loading: true })
         let userData = {
             id: this.props.user.user.id,
         }
@@ -194,17 +194,24 @@ class Home extends Component {
                             </View>
 
                             :
-                            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '5%', }}>
 
-                                <View style={styles.lowerListContainer}>
-                                    <FlatList
-                                        data={this.state.recentList}
-                                        showsVerticalScrollIndicator={false}
-                                        ItemSeparatorComponent={this._renderListSeparator}
-                                        renderItem={({ item, index }) => this._renderListItems(item, index)}
-                                        keyExtractor={item => item} />
-                                </View>
-                            </ScrollView>
+                            <View style={styles.lowerListContainer}>
+                                <FlatList
+                                    contentContainerStyle={{ paddingBottom: '5%', }}
+                                    refreshControl={
+                                        <RefreshControl
+                                            refreshing={this.state.loading}
+                                            onRefresh={() => this.componentDidMount()}
+                                            tintColor={'#0DA7DF'}
+                                            colors={['#0DA7DF']}
+                                        />
+                                    }
+                                    data={this.state.recentList}
+                                    showsVerticalScrollIndicator={false}
+                                    ItemSeparatorComponent={this._renderListSeparator}
+                                    renderItem={({ item, index }) => this._renderListItems(item, index)}
+                                    keyExtractor={item => item} />
+                            </View>
                         :
                         null
                     }
@@ -223,18 +230,25 @@ class Home extends Component {
                                     <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', }}>{'No completed order found'}</Text>
                                 </View>
                                 :
-                                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '15%', }}>
-                                    <View style={styles.lowerListContainer}>
+                                <View style={styles.lowerListContainer}>
 
 
-                                        <FlatList
-                                            data={this.state.orderHistory}
-                                            showsVerticalScrollIndicator={false}
-                                            ItemSeparatorComponent={this._renderListSeparator}
-                                            renderItem={({ item, index }) => this._renderOrderListItems(item, index)}
-                                            keyExtractor={item => item} />
-                                    </View>
-                                </ScrollView>
+                                    <FlatList
+                                        contentContainerStyle={{ paddingBottom: '15%', }}
+                                        refreshControl={
+                                            <RefreshControl
+                                                refreshing={this.state.loading}
+                                                onRefresh={() => this.componentDidMount()}
+                                                tintColor={'#0DA7DF'}
+                                                colors={['#0DA7DF']}
+                                            />
+                                        }
+                                        data={this.state.orderHistory}
+                                        showsVerticalScrollIndicator={false}
+                                        ItemSeparatorComponent={this._renderListSeparator}
+                                        renderItem={({ item, index }) => this._renderOrderListItems(item, index)}
+                                        keyExtractor={item => item} />
+                                </View>
                         :
                         null
                     }

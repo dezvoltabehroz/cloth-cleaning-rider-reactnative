@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { Component } from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View, ImageBackground, FlatList, Platform } from 'react-native';
+import { Image, ScrollView, Text, TouchableOpacity, RefreshControl, View, ImageBackground, FlatList, Platform } from 'react-native';
 import { Input } from 'react-native-elements';
 import { RiderTabs } from '../../components';
 import styles from './style';
@@ -36,6 +36,7 @@ class Orders extends Component {
     }
 
     componentDidMount = () => {
+        this.setState({ loading: true, })
         let userData = {
             id: this.props.user.user.id,
         }
@@ -102,16 +103,23 @@ class Orders extends Component {
         const { activeTab } = this.state;
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }}>
-                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '15%', }}>
-                    <View style={styles.lowerListContainer}>
-                        <FlatList
-                            data={this.state.orderHistory}
-                            showsVerticalScrollIndicator={false}
-                            ItemSeparatorComponent={this._renderListSeparator}
-                            renderItem={({ item, index }) => this._renderOrderListItems(item, index)}
-                            keyExtractor={item => item} />
-                    </View>
-                </ScrollView>
+                <View style={styles.lowerListContainer}>
+                    <FlatList
+                        contentContainerStyle={{ paddingBottom: '15%', }}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={this.state.loading}
+                                onRefresh={() => this.componentDidMount()}
+                                tintColor={'#0DA7DF'}
+                                colors={['#0DA7DF']}
+                            />
+                        }
+                        data={this.state.orderHistory}
+                        showsVerticalScrollIndicator={false}
+                        ItemSeparatorComponent={this._renderListSeparator}
+                        renderItem={({ item, index }) => this._renderOrderListItems(item, index)}
+                        keyExtractor={item => item} />
+                </View>
             </View>
         )
     }
