@@ -260,22 +260,22 @@ export default class OrderStatus extends Component {
                     }}>
                         <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>
                             <TouchableOpacity onPress={() => {
-                                // if (this.state.region.longitude == 'undefined' || this.state.region.longitude == null || this.state.region.longitude == '' || this.state.region.longitude == NaN) {
-                                //     alert('Under Devolepment Coming Soon')
-                                // }
-                                // else {
-                                //     this.props.navigation.push('Map', {
-                                //         screen: 'Map',
-                                //         params: {
-                                //             address: this.state.address, region: {
-                                //                 latitude: parseFloat(this.state.region.latitude),
-                                //                 longitude: parseFloat(this.state.region.longitude),
-                                //                 latitudeDelta: 0.0922,
-                                //                 longitudeDelta: 0.0421,
-                                //             }
-                                //         }
-                                //     })
-                                // }
+                                if (this.state.region.longitude == 'undefined' || this.state.region.longitude == null || this.state.region.longitude == '' || this.state.region.longitude == NaN) {
+                                    alert('Under Devolepment Coming Soon')
+                                }
+                                else {
+                                    this.props.navigation.push('Map', {
+                                        screen: 'Map',
+                                        params: {
+                                            address: this.state.address, region: {
+                                                latitude: parseFloat(this.state.region.latitude),
+                                                longitude: parseFloat(this.state.region.longitude),
+                                                latitudeDelta: 0.0922,
+                                                longitudeDelta: 0.0421,
+                                            }
+                                        }
+                                    })
+                                }
                             }}>
                                 <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
                                     <Text style={styles.checkButtonTextStyle}>{'Track order'}</Text>
