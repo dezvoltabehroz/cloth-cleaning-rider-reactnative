@@ -267,7 +267,9 @@ export default class OrderStatus extends Component {
                                     this.props.navigation.push('Map', {
                                         screen: 'Map',
                                         params: {
-                                            address: this.state.address, region: {
+                                            item: this.props.route.params.item,
+                                            address: this.state.address,
+                                            region: {
                                                 latitude: parseFloat(this.state.region.latitude),
                                                 longitude: parseFloat(this.state.region.longitude),
                                                 latitudeDelta: 0.0922,

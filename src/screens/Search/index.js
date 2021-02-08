@@ -26,6 +26,7 @@ class Search extends Component {
                 latitudeDelta: 0.005,
                 longitudeDelta: 0.005,
             },
+            item:this.props.route.params.item,
             address: searchObj.searchDetails.formatted_address, item: this.props.route.params.item
         });
         // this.setState({ region: {}, name: '' })
